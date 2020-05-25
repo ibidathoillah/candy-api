@@ -39,7 +39,6 @@ trait InteractsWithIndex
 
     public function against($types)
     {
-        dd(1);
         $this->type = $this->getType($types);
 
         return $this;

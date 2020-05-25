@@ -4,9 +4,9 @@ namespace GetCandy\Api\Core\Search\Providers\Elastic;
 
 use Carbon\Carbon;
 use Elastica\Client;
+use Elastica\Index;
 use Elastica\Document;
-use Elastica\Reindex;
-use Elastica\Type\Mapping;
+use Elastica\Mapping;
 use GetCandy\Api\Core\Languages\Services\LanguageService;
 use GetCandy\Api\Core\Scopes\ChannelScope;
 use GetCandy\Api\Core\Scopes\CustomerGroupScope;
@@ -55,7 +55,8 @@ class Indexer
 
         $index = $this->getIndexName($type);
 
-        $suffix = microtime(true);
+
+        $suffix = now()->timestamp;
 
         $model = new $model;
 
@@ -63,10 +64,10 @@ class Indexer
 
         foreach ($languages as $language) {
             $alias = $index.'_'.$language->lang;
-            $newIndex = $alias."_{$suffix}";
             $this->createIndex($alias."_{$suffix}", $type);
             $aliases[$alias] = $alias."_{$suffix}";
         }
+
 
         $models = $model->withoutGlobalScopes([
             CustomerGroupScope::class,
@@ -76,8 +77,6 @@ class Indexer
             ->get();
 
         $type->setSuffix($suffix);
-
-        $aliasMapping = [];
 
         $indices = $this->client->getStatus()->getIndexNames();
 
@@ -120,15 +119,12 @@ class Indexer
 
             $currentTime = $this->getIndiceTime($index->getName());
 
-            foreach ($indices as $name => $indice) {
-                $fragments = explode('_', $indice->getName());
+            foreach ($indices as $indice) {
                 $time = $this->getIndiceTime($indice->getName());
-
                 if (! $time) {
                     $indice->delete();
                     continue;
                 }
-
                 if ($currentTime->gt($time)) {
                     $indice->delete();
                 }
@@ -140,7 +136,7 @@ class Indexer
     {
         $fragments = explode('_', $name);
         try {
-            return Carbon::createFromTimestampMs(end($fragments));
+            return Carbon::createFromTimestamp(end($fragments));
         } catch (\ErrorException $e) {
         }
     }
@@ -150,15 +146,11 @@ class Indexer
      * @param  Elastica\Index $index
      * @return void
      */
-    public function updateMappings($index, $type)
+    public function updateMappings(Index $index, $type)
     {
-        $elasticaType = $index->getType($type->getHandle());
-
-        $mapping = new Mapping();
-        $mapping->setType($elasticaType);
-
-        $mapping->setProperties($type->getMapping());
-        $mapping->send();
+        return tap(new Mapping($type->getMapping()), function ($mapping) use ($index) {
+            $mapping->send($index);
+        });
     }
 
     /**
@@ -265,80 +257,6 @@ class Indexer
         }
     }
 
-    public function updateDocuments($models, $field = null)
-    {
-        $this->against($models->first());
-
-        $type = $this->getType($models->first());
-        $index = $this->getCurrentIndex();
-        $documents = $type->getUpdatedDocuments($models, $field, $index);
-
-        $docs = [];
-
-        foreach ($documents as $document) {
-            foreach ($document as $doc) {
-                $docs[] = $document = new Document(
-                    $doc->getId(),
-                    $doc->getData(),
-                    $type->getHandle()
-                );
-            }
-        }
-
-        $index->addDocuments($docs);
-    }
-
-    /**
-     * NEW METHODS ABOVE
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------
-     * ---------------------------------------------------------------------------------------------------.
-     */
-    public function updateDocument($model, $field)
-    {
-        $this->against($model);
-        $index = $this->getIndex(
-            $this->indexer->getIndexName()
-        );
-        $this->indexer->getUpdatedDocument($model, $field, $index);
-        $elasticaType = $index->getType($this->indexer->type);
-        $elasticaType->addDocument($document);
-    }
-
-    /**
-     * Cleans up the indexes for next time.
-     *
-     * @param string $suffix
-     * @param array $aliases
-     * @return void
-     */
-    private function cleanup($suffix, $aliases)
-    {
-        if ($suffix == 'a') {
-            $remove = 'b';
-        } else {
-            $remove = 'a';
-        }
-        foreach ($aliases as $alias) {
-            $index = $this->client->getIndex($alias."_{$suffix}");
-            $index->addAlias($alias);
-            $this->reset($alias."_{$remove}");
-        }
-    }
-
     /**
      * Add a single model to the elastic index.
      *
@@ -370,12 +288,6 @@ class Indexer
         return true;
     }
 
-    public function reset($index)
-    {
-        if ($this->hasIndex($index)) {
-            $this->client->getIndex($index)->delete();
-        }
-    }
 
     /**
      * Create an index based on the model.
