@@ -2,7 +2,7 @@
 
 Route::group([
     'middleware' => [
-        'api.client',
+        // 'api.client',
         'api.currency',
         'api.detect_hub',
         'api.customer_groups',
