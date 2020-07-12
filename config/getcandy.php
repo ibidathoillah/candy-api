@@ -115,6 +115,7 @@ return [
             'offline' => GetCandy\Api\Core\Payments\Providers\Offline::class,
             'braintree' => GetCandy\Api\Core\Payments\Providers\Braintree::class,
             'sagepay' => GetCandy\Api\Core\Payments\Providers\SagePay::class,
+            'paypal' => GetCandy\Api\Core\Payments\Providers\PayPal::class,
         ],
     ],
 

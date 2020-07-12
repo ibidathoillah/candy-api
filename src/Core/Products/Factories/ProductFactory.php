@@ -66,6 +66,7 @@ class ProductFactory implements ProductInterface
      */
     public function collection(Collection $products)
     {
+
         foreach ($products as $product) {
             $this->init($product)->get();
         }

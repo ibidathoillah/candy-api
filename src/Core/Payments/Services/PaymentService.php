@@ -37,14 +37,14 @@ class PaymentService extends BaseService
      *
      * @return void
      */
-    public function getProvider()
+    public function getProvider($name)
     {
-        if (! $this->provider) {
-            $this->provider = config($this->configPath.'.gateway', 'braintree');
+        if (! $name) {
+            $name = config($this->configPath.'.gateway', $name);
         }
 
         $provider = config(
-            $this->configPath.'.providers.'.$this->provider
+            $this->configPath.'.providers.'.$name
         );
 
         return app()->make($provider);

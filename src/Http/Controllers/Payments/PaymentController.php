@@ -16,9 +16,9 @@ use GetCandy\Api\Http\Transformers\Fractal\Payments\TransactionTransformer;
 
 class PaymentController extends BaseController
 {
-    public function provider()
+    public function provider($name)
     {
-        $provider = app('api')->payments()->getProvider();
+        $provider = app('api')->payments()->getProvider($name);
 
         return $this->respondWithItem($provider, new ProviderTransformer);
     }
