@@ -15,7 +15,7 @@ use League\OAuth2\Server\Exception\OAuthServerException;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
 use Laravel\Passport\Http\Middleware\CheckClientCredentials as BaseMiddleware;
 
-class CheckClientCredentials extends BaseMiddleware
+class CheckUserCredentials extends BaseMiddleware
 {
     /**
      * The Resource Server instance.
@@ -81,8 +81,8 @@ class CheckClientCredentials extends BaseMiddleware
             throw new AuthenticationException;
         }
 
-        if($psr->getAttribute('oauth_client_id')){
-            Auth::login($this->provider->retrieveById(1));
+        if ($user = $this->provider->retrieveById($psr->getAttribute('oauth_user_id'))) {
+            Auth::login($user);
             return $next($request);
         } else {
             throw new AuthenticationException;

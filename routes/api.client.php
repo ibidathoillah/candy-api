@@ -2,7 +2,7 @@
 
 Route::group([
     'middleware' => [
-        // 'api.client',
+        'api.user',
         'api.currency',
         'api.detect_hub',
         'api.customer_groups',
@@ -13,17 +13,6 @@ Route::group([
     'prefix' => 'api/'.config('app.api_version', 'v1'),
     'namespace' => 'GetCandy\Api\Http\Controllers',
 ], function ($router) {
-
-    $router->get('/', function () {
-        $channel = app()->make(GetCandy\Api\Core\Channels\Interfaces\ChannelFactoryInterface::class);
-        $currency = app()->make(GetCandy\Api\Core\Currencies\Interfaces\CurrencyConverterInterface::class);
-        return response()->json([
-            'version' => GetCandy\Api\Core\CandyApi::version(),
-            'locale' => app()->getLocale(),
-            'channel' => new GetCandy\Api\Http\Resources\Channels\ChannelResource($channel->getChannel()),
-            'currency' => new GetCandy\Api\Http\Resources\Currencies\CurrencyResource($currency->get()),
-        ]);
-    });
 
     // Address Route
     $router->delete('addresses/{id}', 'Addresses\AddressController@destroy');
@@ -44,32 +33,7 @@ Route::group([
     $router->get('collections', 'Collections\CollectionController@index');
     $router->get('collections/{id}', 'Collections\CollectionController@show');
     $router->get('categories/{id}', 'Categories\CategoryController@show');
-    $router->get('products/recommended', 'Products\ProductController@recommended');
-    $router->get('products/{product}', 'Products\ProductController@show');
     $router->post('customers', 'Customers\CustomerController@store');
-    $router->get('products', 'Products\ProductController@index');
-
-    /*
-     * Baskets
-     */
-    $router->get('baskets', 'Products\ProductController@index');
-    $router->post('baskets/{id}/meta', 'Baskets\BasketController@addMeta');
-    $router->put('baskets/{id}/discounts', 'Baskets\BasketController@addDiscount');
-    $router->delete('baskets/{id}/discounts', 'Baskets\BasketController@deleteDiscount');
-    $router->put('baskets/{id}/user', 'Baskets\BasketController@putUser');
-    $router->delete('baskets/{id}/user', 'Baskets\BasketController@deleteUser');
-    $router->resource('baskets', 'Baskets\BasketController', [
-        'except' => ['edit', 'create', 'destroy', 'update'],
-    ]);
-
-    /*
-     * Basket Lines
-     */
-    $router->post('basket-lines', 'Baskets\BasketLineController@store');
-    $router->put('basket-lines/{id}', 'Baskets\BasketLineController@update');
-    $router->post('basket-lines/{id}/add', 'Baskets\BasketLineController@addQuantity');
-    $router->post('basket-lines/{id}/remove', 'Baskets\BasketLineController@removeQuantity');
-    $router->delete('basket-lines', 'Baskets\BasketLineController@destroy');
 
     /*
      * Categories
@@ -81,13 +45,6 @@ Route::group([
      * Countries
      */
     $router->get('countries', 'Countries\CountryController@index');
-
-    /*
-     * Currencies
-     */
-    $router->resource('currencies', 'Currencies\CurrencyController', [
-        'except' => ['edit', 'create'],
-    ]);
 
     /*
      * Customers
@@ -121,7 +78,7 @@ Route::group([
      * Payments
      */
     $router->post('payments/3d-secure', 'Payments\PaymentController@validateThreeD');
-    $router->get('payments/provider', 'Payments\PaymentController@provider');
+    $router->get('payments/provider/{name}', 'Payments\PaymentController@provider');
     $router->get('payments/providers', 'Payments\PaymentController@providers');
     $router->get('payments/types', 'Payments\PaymentTypeController@index');
 
@@ -133,7 +90,6 @@ Route::group([
     $router->post('password/reset', 'Auth\ResetPasswordController@reset');
     $router->post('password/reset/request', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
-    $router->get('search', 'Search\SearchController@search');
     $router->get('search/suggest', 'Search\SearchController@suggest');
     $router->get('search/sku', 'Search\SearchController@sku');
     $router->get('search/products', 'Search\SearchController@products');
@@ -148,4 +104,68 @@ Route::group([
     $router->post('users/{userid}', 'Users\UserController@update');
 
     $router->get('plugins', 'Plugins\PluginController@index');
+
+
+    /*
+     * Basket Lines
+     */
+    $router->post('basket-lines', 'Baskets\BasketLineController@store');
+    $router->put('basket-lines/{id}', 'Baskets\BasketLineController@update');
+    $router->post('basket-lines/{id}/add', 'Baskets\BasketLineController@addQuantity');
+    $router->post('basket-lines/{id}/remove', 'Baskets\BasketLineController@removeQuantity');
+    $router->delete('basket-lines', 'Baskets\BasketLineController@destroy');
+
+    /*
+     * Baskets
+     */
+    $router->get('baskets', 'Products\ProductController@index');
+    $router->post('baskets/{id}/meta', 'Baskets\BasketController@addMeta');
+    $router->put('baskets/{id}/discounts', 'Baskets\BasketController@addDiscount');
+    $router->delete('baskets/{id}/discounts', 'Baskets\BasketController@deleteDiscount');
+    $router->put('baskets/{id}/user', 'Baskets\BasketController@putUser');
+    $router->delete('baskets/{id}/user', 'Baskets\BasketController@deleteUser');
+    $router->resource('baskets', 'Baskets\BasketController', [
+        'except' => ['edit', 'create', 'destroy', 'update'],
+    ]);
 });
+
+
+Route::group([
+    'middleware' => [
+        'api.client',
+        'api.currency',
+        'api.detect_hub',
+        'api.customer_groups',
+        'api.channels',
+        'api.locale',
+        'api.tax',
+    ],
+    'prefix' => 'api/'.config('app.api_version', 'v1'),
+    'namespace' => 'GetCandy\Api\Http\Controllers',
+], function ($router) {
+
+    $router->get('/', function () {
+        $channel = app()->make(GetCandy\Api\Core\Channels\Interfaces\ChannelFactoryInterface::class);
+        $currency = app()->make(GetCandy\Api\Core\Currencies\Interfaces\CurrencyConverterInterface::class);
+        return response()->json([
+            'version' => GetCandy\Api\Core\CandyApi::version(),
+            'locale' => app()->getLocale(),
+            'channel' => new GetCandy\Api\Http\Resources\Channels\ChannelResource($channel->getChannel()),
+            'currency' => new GetCandy\Api\Http\Resources\Currencies\CurrencyResource($currency->get()),
+        ]);
+    });
+
+    /*
+     * Currencies
+     */
+    $router->resource('currencies', 'Currencies\CurrencyController', [
+        'except' => ['edit', 'create'],
+    ]);
+
+    $router->get('products', 'Products\ProductController@index');
+    $router->get('products/recommended', 'Products\ProductController@recommended');
+    $router->get('products/{product}', 'Products\ProductController@show');
+    $router->get('search', 'Search\SearchController@search');
+
+});
+

@@ -21,6 +21,7 @@ use GetCandy\Api\Http\Middleware\SetCurrencyMiddleware;
 use GetCandy\Api\Http\Middleware\CheckClientCredentials;
 use GetCandy\Api\Console\Commands\InstallGetCandyCommand;
 use GetCandy\Api\Console\Commands\CandySearchIndexCommand;
+use GetCandy\Api\Http\Middleware\CheckUserCredentials;
 use GetCandy\Api\Http\Middleware\DetectHubRequestMiddleware;
 
 class ApiServiceProvider extends ServiceProvider
@@ -218,6 +219,7 @@ class ApiServiceProvider extends ServiceProvider
     protected function registerMiddleware()
     {
         $this->app['router']->aliasMiddleware('api.client', CheckClientCredentials::class);
+        $this->app['router']->aliasMiddleware('api.user', CheckUserCredentials::class);
         $this->app['router']->aliasMiddleware('api.currency', SetCurrencyMiddleware::class);
         $this->app['router']->aliasMiddleware('api.customer_groups', SetCustomerGroups::class);
         $this->app['router']->aliasMiddleware('api.locale', SetLocaleMiddleware::class);
