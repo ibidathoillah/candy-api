@@ -33,7 +33,6 @@ Route::group([
     $router->get('collections', 'Collections\CollectionController@index');
     $router->get('collections/{id}', 'Collections\CollectionController@show');
     $router->get('categories/{id}', 'Categories\CategoryController@show');
-    $router->post('customers', 'Customers\CustomerController@store');
 
     /*
      * Categories
@@ -86,9 +85,6 @@ Route::group([
     $router->get('routes/{slug}', [
         'uses' => 'Routes\RouteController@show',
     ])->where(['slug' => '.*']);
-
-    $router->post('password/reset', 'Auth\ResetPasswordController@reset');
-    $router->post('password/reset/request', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
     $router->get('search/suggest', 'Search\SearchController@suggest');
     $router->get('search/sku', 'Search\SearchController@sku');
@@ -166,6 +162,17 @@ Route::group([
     $router->get('products/recommended', 'Products\ProductController@recommended');
     $router->get('products/{product}', 'Products\ProductController@show');
     $router->get('search', 'Search\SearchController@search');
+
+    /*
+     * Customers
+     */
+    $router->post('customers', 'Customers\CustomerController@store');
+
+    /*
+     * Password
+     */
+    $router->post('password/reset', 'Auth\ResetPasswordController@reset');
+    $router->post('password/reset/request', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
 });
 
