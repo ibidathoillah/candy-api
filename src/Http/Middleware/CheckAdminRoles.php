@@ -4,8 +4,11 @@ namespace GetCandy\Api\Http\Middleware;
 
 use Closure;
 use GetCandy\Api\Core\CandyApi;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\AuthenticationException;
 
-class DetectHubRequestMiddleware
+
+class CheckAdminRoles
 {
     protected $api;
 
@@ -23,11 +26,9 @@ class DetectHubRequestMiddleware
      */
     public function handle($request, Closure $next)
     {
-        // check hub request
-        // if ($request->headers->has('X-CANDY-HUB')) {
-        // }
-
-        $this->api->setIsHubRequest(true);
+        if (!Auth::user()->hasRole('admin')) {
+            throw new AuthenticationException;
+        }
 
         return $next($request);
     }

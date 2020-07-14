@@ -21,6 +21,7 @@ use GetCandy\Api\Http\Middleware\SetCurrencyMiddleware;
 use GetCandy\Api\Http\Middleware\CheckClientCredentials;
 use GetCandy\Api\Console\Commands\InstallGetCandyCommand;
 use GetCandy\Api\Console\Commands\CandySearchIndexCommand;
+use GetCandy\Api\Http\Middleware\CheckAdminRoles;
 use GetCandy\Api\Http\Middleware\CheckUserCredentials;
 use GetCandy\Api\Http\Middleware\DetectHubRequestMiddleware;
 
@@ -226,5 +227,7 @@ class ApiServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('api.tax', SetTaxMiddleware::class);
         $this->app['router']->aliasMiddleware('api.channels', SetChannelMiddleware::class);
         $this->app['router']->aliasMiddleware('api.detect_hub', DetectHubRequestMiddleware::class);
+        $this->app['router']->aliasMiddleware('api.admin', CheckAdminRoles::class);
+
     }
 }

@@ -15,6 +15,7 @@ Route::group([
         'api.tax',
         'api.channels',
         'api.detect_hub',
+        'api.admin',
     ],
     'prefix' => 'api/'.config('app.api_version', 'v1'),
     'namespace' => 'GetCandy\Api\Http\Controllers',
@@ -24,11 +25,6 @@ Route::group([
     * Imports
     */
     $router->post('import', 'Utils\ImportController@process');
-
-    $router->post('account/password', [
-        'as' => 'account.password.reset',
-        'uses' => 'Auth\AccountController@resetPassword',
-    ]);
 
     $router->get('activity-log', [
         'as' => 'activitylog.index',
@@ -268,18 +264,8 @@ Route::group([
     /*
      * Users
      */
-    $router->get('users/fields', 'Users\UserController@fields');
-    $router->get('users/current', 'Users\UserController@getCurrentUser');
     $router->delete('users/payments/{id}', 'Users\UserController@deleteReusablePayment');
-    $router->resource('users', 'Users\UserController', [
-        'except' => ['create', 'store'],
-    ]);
+    $router->post('users', 'Users\UserController@store');
+    $router->post('users/{userid}', 'Users\UserController@update');
 
-    /*
-     * Account
-     */
-    $router->post('account/password', [
-        'as' => 'account.password.reset',
-        'uses' => 'Auth\AccountController@resetPassword',
-    ]);
 });

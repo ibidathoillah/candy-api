@@ -86,19 +86,23 @@ Route::group([
         'uses' => 'Routes\RouteController@show',
     ])->where(['slug' => '.*']);
 
-    $router->get('search/suggest', 'Search\SearchController@suggest');
-    $router->get('search/sku', 'Search\SearchController@sku');
-    $router->get('search/products', 'Search\SearchController@products');
-
     /*
      * Shipping
      */
     $router->get('shipping', 'Shipping\ShippingMethodController@index');
     $router->get('shipping/prices/estimate', 'Shipping\ShippingPriceController@estimate');
 
-    $router->post('users', 'Users\UserController@store');
-    $router->post('users/{userid}', 'Users\UserController@update');
+    // disable user update for client
 
+
+    /*
+     * Users
+     */
+    $router->get('users/fields', 'Users\UserController@fields');
+    $router->get('users/current', 'Users\UserController@getCurrentUser');
+    $router->resource('users', 'Users\UserController', [
+        'except' => ['create', 'store'],
+    ]);
     $router->get('plugins', 'Plugins\PluginController@index');
 
 
@@ -123,6 +127,26 @@ Route::group([
     $router->resource('baskets', 'Baskets\BasketController', [
         'except' => ['edit', 'create', 'destroy', 'update'],
     ]);
+
+    /*
+     * Account
+     */
+    $router->post('account/password', [
+        'as' => 'account.password.reset',
+        'uses' => 'Auth\AccountController@resetPassword',
+    ]);
+
+
+    /*
+     * Account
+     */
+    $router->post('account/password', [
+        'as' => 'account.password.reset',
+        'uses' => 'Auth\AccountController@resetPassword',
+    ]);
+
+    $router->get('search/suggest', 'Search\SearchController@suggest');
+    $router->get('search/products', 'Search\SearchController@products');
 });
 
 
@@ -162,6 +186,7 @@ Route::group([
     $router->get('products/recommended', 'Products\ProductController@recommended');
     $router->get('products/{product}', 'Products\ProductController@show');
     $router->get('search', 'Search\SearchController@search');
+    $router->get('search/sku', 'Search\SearchController@sku');
 
     /*
      * Customers
