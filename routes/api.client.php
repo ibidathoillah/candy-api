@@ -38,6 +38,7 @@ Route::group([
     $router->get('search', 'Search\SearchController@search');
     $router->get('search/sku', 'Search\SearchController@sku');
 
+
     /*
      * Customers
      */

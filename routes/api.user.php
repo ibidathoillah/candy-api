@@ -14,6 +14,9 @@ Route::group([
     'namespace' => 'GetCandy\Api\Http\Controllers',
 ], function ($router) {
 
+
+    $router->post('addresses', 'Addresses\AddressController@store');
+
     // Address Route
     $router->delete('addresses/{id}', 'Addresses\AddressController@destroy');
     $router->put('addresses/{id}', 'Addresses\AddressController@update');

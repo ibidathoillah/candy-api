@@ -314,6 +314,25 @@ class OrderController extends BaseController
         return new ShippingPriceCollection($options);
     }
 
+        /**
+     * Get shipping methods for an order.
+     *
+     * @param string $orderId
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function shippingMethod($id, StoreAddressRequest $request)
+    {
+        try {
+            $order = app('api')->orders()->setShipping($id, $request->all(), $request->user());
+        } catch (ModelNotFoundException $e) {
+            return $this->errorNotFound();
+        }
+
+        return new ShippingPriceCollection($options);
+    }
+
     /**
      * Add a contact to an order.
      *

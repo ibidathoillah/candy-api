@@ -36,7 +36,6 @@ Route::group([
         'uses' => 'ActivityLog\ActivityLogController@store',
     ]);
 
-    $router->post('addresses', 'Addresses\AddressController@store');
     $router->post('auth/impersonate', [
         'as' => 'auth.impersonate',
         'uses' => 'Auth\ImpersonateController@process',
@@ -80,7 +79,6 @@ Route::group([
     $router->post('baskets/{id}/meta', 'Baskets\BasketController@addMeta');
     $router->put('baskets/{id}/user', 'Baskets\BasketController@putUser');
     $router->delete('baskets/{id}/user', 'Baskets\BasketController@deleteUser');
-
 
     /*
      * Payments
@@ -150,7 +148,6 @@ Route::group([
         'except' => ['edit', 'create'],
     ]);
 
-
     // /*
     //  * Pages
     //  */
@@ -165,9 +162,6 @@ Route::group([
     $router->resource('products/variants', 'Products\ProductVariantController', [
         'except' => ['edit', 'create', 'store'],
     ]);
-    $router->put('products/variants/{variant}/inventory', 'Products\ProductVariantController@updateInventory');
-    $router->post('products/{product}/variants', 'Products\ProductVariantController@store');
-    $router->post('products/{product}/duplicate', 'Products\ProductController@duplicate');
 
     /*
      * Products
