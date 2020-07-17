@@ -75,12 +75,13 @@ class CheckClientCredentials extends BaseMiddleware
             }
         }
 
-        try {
-            $psr = $this->server->validateAuthenticatedRequest($psr);
-        } catch (OAuthServerException $e) {
-            throw new AuthenticationException;
-        }
         // remove check uath for client/guest
+        // try {
+        //     $psr = $this->server->validateAuthenticatedRequest($psr);
+        // } catch (OAuthServerException $e) {
+        //     throw new AuthenticationException;
+        // }
+
         // if($psr->getAttribute('oauth_client_id')){
             Auth::login($this->provider->retrieveById(1));
             return $next($request);
