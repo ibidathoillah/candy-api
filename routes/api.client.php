@@ -66,129 +66,129 @@ Route::group([
 
 
 
-        /*
-     * Currencies
-     */
-    $router->resource('currencies', 'Currencies\CurrencyController', [
-        'except' => ['edit', 'create'],
-    ]);
+//         /*
+//      * Currencies
+//      */
+//     $router->resource('currencies', 'Currencies\CurrencyController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
-    $router->resource('assets', 'Assets\AssetController', [
-        'except' => ['edit', 'create'],
-    ]);
-    $router->resource('attributes', 'Attributes\AttributeController', [
-        'except' => ['edit', 'create'],
-    ]);
+//     $router->resource('assets', 'Assets\AssetController', [
+//         'except' => ['edit', 'create'],
+//     ]);
+//     $router->resource('attributes', 'Attributes\AttributeController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
-    $router->resource('attribute-groups', 'Attributes\AttributeGroupController', [
-        'except' => ['edit', 'create'],
-    ]);
+//     $router->resource('attribute-groups', 'Attributes\AttributeGroupController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
-    $router->resource('categories', 'Categories\CategoryController', [
-        'except' => ['index', 'edit', 'create', 'show'],
-    ]);
+//     $router->resource('categories', 'Categories\CategoryController', [
+//         'except' => ['index', 'edit', 'create', 'show'],
+//     ]);
 
-    /*
-     * Channels
-     */
-    $router->resource('channels', 'Channels\ChannelController', [
-        'except' => ['edit', 'create', 'show'],
-    ]);
+//     /*
+//      * Channels
+//      */
+//     $router->resource('channels', 'Channels\ChannelController', [
+//         'except' => ['edit', 'create', 'show'],
+//     ]);
 
-    $router->resource('collections', 'Collections\CollectionController', [
-        'except' => ['index', 'edit', 'create', 'show'],
-    ]);
+//     $router->resource('collections', 'Collections\CollectionController', [
+//         'except' => ['index', 'edit', 'create', 'show'],
+//     ]);
 
-    /*
-     * Customers
-     */
-    $router->resource('customers/groups', 'Customers\CustomerGroupController', [
-        'except' => ['edit', 'create', 'show'],
-    ]);
+//     /*
+//      * Customers
+//      */
+//     $router->resource('customers/groups', 'Customers\CustomerGroupController', [
+//         'except' => ['edit', 'create', 'show'],
+//     ]);
 
-    $router->resource('customers', 'Customers\CustomerController', [
-        'except' => ['edit', 'create', 'store'],
-    ]);
+//     $router->resource('customers', 'Customers\CustomerController', [
+//         'except' => ['edit', 'create', 'store'],
+//     ]);
 
-    /*
-     * Discounts
-     */
-    $router->resource('discounts', 'Discounts\DiscountController', [
-        'except' => ['edit', 'create'],
-    ]);
+//     /*
+//      * Discounts
+//      */
+//     $router->resource('discounts', 'Discounts\DiscountController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
-    /*
-     * Languages
-     */
-    $router->resource('languages', 'Languages\LanguageController', [
-        'except' => ['edit', 'create'],
-    ]);
+//     /*
+//      * Languages
+//      */
+//     $router->resource('languages', 'Languages\LanguageController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
-   /*
-     * Layouts
-     */
-    $router->resource('layouts', 'Layouts\LayoutController', [
-        'except' => ['edit', 'create'],
-    ]);
+//    /*
+//      * Layouts
+//      */
+//     $router->resource('layouts', 'Layouts\LayoutController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
-    // /*
-    //  * Pages
-    //  */
-    // $router->get('/pages/{channel}/{lang}/{slug?}', 'Pages\PageController@show');
-    // $router->resource('pages', 'Pages\PageController', [
-    //     'except' => ['edit', 'create'],
-    // ]);
+//     // /*
+//     //  * Pages
+//     //  */
+//     // $router->get('/pages/{channel}/{lang}/{slug?}', 'Pages\PageController@show');
+//     // $router->resource('pages', 'Pages\PageController', [
+//     //     'except' => ['edit', 'create'],
+//     // ]);
 
-    /*
-     * Product variants
-     */
-    $router->resource('products/variants', 'Products\ProductVariantController', [
-        'except' => ['edit', 'create', 'store'],
-    ]);
+//     /*
+//      * Product variants
+//      */
+//     $router->resource('products/variants', 'Products\ProductVariantController', [
+//         'except' => ['edit', 'create', 'store'],
+//     ]);
 
-        /*
-     * Resource routes
-     */
-    $router->resource('products', 'Products\ProductController', [
-        'except' => ['edit', 'create', 'show'],
-    ]);
+//         /*
+//      * Resource routes
+//      */
+//     $router->resource('products', 'Products\ProductController', [
+//         'except' => ['edit', 'create', 'show'],
+//     ]);
 
-    /*
-     * Product families
-     */
-    $router->resource('product-families', 'Products\ProductFamilyController', [
-        'except' => ['edit', 'create'],
-    ]);
+//     /*
+//      * Product families
+//      */
+//     $router->resource('product-families', 'Products\ProductFamilyController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
-    /*
-     * Routes
-     */
-    $router->resource('routes', 'Routes\RouteController', [
-        'except' => ['index', 'show', 'edit', 'create'],
-    ]);
+//     /*
+//      * Routes
+//      */
+//     $router->resource('routes', 'Routes\RouteController', [
+//         'except' => ['index', 'show', 'edit', 'create'],
+//     ]);
 
-    $router->resource('shipping/zones', 'Shipping\ShippingZoneController', [
-        'except' => ['edit', 'create'],
-    ]);
+//     $router->resource('shipping/zones', 'Shipping\ShippingZoneController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
-    $router->resource('shipping', 'Shipping\ShippingMethodController', [
-        'except' => ['index', 'edit', 'create'],
-    ]);
+//     $router->resource('shipping', 'Shipping\ShippingMethodController', [
+//         'except' => ['index', 'edit', 'create'],
+//     ]);
 
-    /*
-     * Tags
-     */
-    $router->resource('tags', 'Tags\TagController', [
-        'except' => ['edit', 'create'],
-    ]);
+//     /*
+//      * Tags
+//      */
+//     $router->resource('tags', 'Tags\TagController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
 
-    /*
-     * Taxes
-     */
-    $router->resource('taxes', 'Taxes\TaxController', [
-        'except' => ['edit', 'create'],
-    ]);
+//     /*
+//      * Taxes
+//      */
+//     $router->resource('taxes', 'Taxes\TaxController', [
+//         'except' => ['edit', 'create'],
+//     ]);
 
 
 
