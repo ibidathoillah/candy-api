@@ -46,7 +46,7 @@ class Image extends BaseUploadDriver implements AssetDriverContract
             Storage::disk($source->disk)->put($asset->location.'/'.$asset->filename, $data['file']->getContents());
         } else {
             echo $source->disk.$asset->location.$asset->filename;
-            $data['file']->store($asset->location, $asset->filename, $source->disk);
+            $data['file']->store($asset->location.'/'.$asset->filename, $source->disk);
         }
 
         if (! empty($image)) {
