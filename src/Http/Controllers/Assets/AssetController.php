@@ -24,7 +24,7 @@ class AssetController extends BaseController
         $path = $file->store($directory);
 
         // You can't transform a PDF so...
-        try {
+     
             $image = Image::make(Storage::get($path));
             $type = pathinfo($path, PATHINFO_EXTENSION);
             $filename = basename($path, ".{$type}");
@@ -37,8 +37,6 @@ class AssetController extends BaseController
                 $thumbnail,
                 $image->stream($type, 100)->getContents()
             );
-        } catch (NotReadableException $e) {
-        }
 
         return response()->json([
             'path' => $path,
