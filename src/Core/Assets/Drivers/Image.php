@@ -45,9 +45,9 @@ class Image extends BaseUploadDriver implements AssetDriverContract
         if ($data['file'] instanceof SplFileInfo) {
             Storage::disk($source->disk)->put($asset->location.'/'.$asset->filename, $data['file']->getContents());
         } else {
-            Storage::disk('local')->put('file.txt', 'Contents');
-            Storage::disk($source->disk)->put($asset->location.'/'.$asset->filename, $data['file']);
-       }
+            echo var_dump(data['file']);
+            $data['file']->storeAs($asset->location, $asset->filename, $source->disk);
+        }
 
         if (! empty($image)) {
             GenerateTransforms::dispatch($asset);
