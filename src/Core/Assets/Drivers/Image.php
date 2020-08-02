@@ -2,7 +2,7 @@
 
 namespace GetCandy\Api\Core\Assets\Drivers;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;
 use Image as InterventionImage;
 use Symfony\Component\Finder\SplFileInfo;
 use GetCandy\Api\Core\Assets\Jobs\GenerateTransforms;
