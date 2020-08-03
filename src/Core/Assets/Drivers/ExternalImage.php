@@ -2,7 +2,7 @@
 
 namespace GetCandy\Api\Core\Assets\Drivers;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use GetCandy\Api\Core\Assets\Models\Asset;

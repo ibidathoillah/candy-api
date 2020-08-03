@@ -2,7 +2,7 @@
 
 namespace GetCandy\Api\Core\Assets\Models;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;;
 use GetCandy\Api\Core\Tags\Models\Tag;
 use GetCandy\Api\Core\Scaffold\BaseModel;
 use GetCandy\Api\Core\Products\Models\Product;

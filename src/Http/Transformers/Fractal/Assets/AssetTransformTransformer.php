@@ -2,7 +2,7 @@
 
 namespace GetCandy\Api\Http\Transformers\Fractal\Assets;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;;
 use GetCandy\Api\Core\Assets\Models\AssetTransform;
 use GetCandy\Api\Http\Transformers\Fractal\BaseTransformer;
 

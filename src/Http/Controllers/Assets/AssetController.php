@@ -3,7 +3,7 @@
 namespace GetCandy\Api\Http\Controllers\Assets;
 
 use Image;
-use Storage;
+use Illuminate\Support\Facades\Storage;;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GetCandy\Exceptions\InvalidServiceException;

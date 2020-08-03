@@ -2,7 +2,7 @@
 
 namespace GetCandy\Api\Core\Assets\Models;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;;
 use GetCandy\Api\Core\Scaffold\BaseModel;
 
 class AssetTransform extends BaseModel

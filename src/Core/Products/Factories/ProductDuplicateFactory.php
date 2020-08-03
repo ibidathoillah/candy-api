@@ -3,7 +3,7 @@
 namespace GetCandy\Api\Core\Products\Factories;
 
 use DB;
-use Storage;
+use Illuminate\Support\Facades\Storage;;
 use Illuminate\Support\Collection;
 use League\Flysystem\FileNotFoundException;
 use GetCandy\Api\Core\Products\Models\Product;

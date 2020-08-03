@@ -2,7 +2,7 @@
 
 namespace GetCandy\Api\Core\Assets\Jobs;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

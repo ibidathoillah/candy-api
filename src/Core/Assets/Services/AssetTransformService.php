@@ -3,7 +3,7 @@
 namespace GetCandy\Api\Core\Assets\Services;
 
 use Image;
-use Storage;
+use Illuminate\Support\Facades\Storage;;
 use Carbon\Carbon;
 use GetCandy\Api\Core\Assets\Models\Asset;
 use GetCandy\Api\Core\Scaffold\BaseService;
