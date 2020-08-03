@@ -8,6 +8,7 @@
 
 Route::group([
     'middleware' => [
+        'api.cors',
         'auth:api',
         'api.currency',
         'api.customer_groups',
