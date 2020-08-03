@@ -1,4 +1,5 @@
-<?php namespace App\Http\Middleware;
+<?php 
+namespace GetCandy\Api\Http\Middleware;
 
 use Closure;
 
