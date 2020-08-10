@@ -122,9 +122,8 @@ class BasketLineController extends BaseController
      */
     public function destroyById(DeleteLinesRequest $request,$id)
     {
-        $basket = $this->basketLines->destroy([
-            "data" => ["id" => $id]
-        ]);
+        $request->lines->data->id = $id;
+        $basket = $this->basketLines->destroy($request->lines);
 
         return new BasketResource($basket);
     }
