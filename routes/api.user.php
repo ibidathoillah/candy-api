@@ -102,6 +102,8 @@ Route::group([
     $router->post('basket-lines/{id}/add', 'Baskets\BasketLineController@addQuantity');
     $router->post('basket-lines/{id}/remove', 'Baskets\BasketLineController@removeQuantity');
     $router->delete('basket-lines', 'Baskets\BasketLineController@destroy');
+    $router->delete('basket-lines/{id}', 'Baskets\BasketLineController@destroyById');
+    
 
     /*
      * Baskets

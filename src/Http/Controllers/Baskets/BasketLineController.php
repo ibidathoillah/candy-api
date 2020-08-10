@@ -111,4 +111,21 @@ class BasketLineController extends BaseController
 
         return new BasketResource($basket);
     }
+
+
+    /**
+     * Handle the request to delete a basket.
+     *
+     * @param DeleteLinesRequest $request
+     *
+     * @return BasketResource
+     */
+    public function destroyById(DeleteLinesRequest $request,$id)
+    {
+        $basket = $this->basketLines->destroy([
+            "data" => ["id" => $id]
+        ]);
+
+        return new BasketResource($basket);
+    }
 }
