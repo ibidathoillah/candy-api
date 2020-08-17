@@ -411,7 +411,8 @@ class OrderFactory implements OrderFactoryInterface
         $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
                 'form_params'=> [
                     'postal_code' => "51252",
-                    'provider' => 'rpx'
+                    'provider' => 'rpx',
+                    'weight'=> 0
                 ],
                 'headers' => [ 'Authorization' => "Bearer ". auth()->guard('api')->user()->remember_token ]
         ));
