@@ -419,6 +419,7 @@ class OrderFactory implements OrderFactoryInterface
         if($res["data"]["fee"]){
             $totals->delivery_total = $res["data"]["fee"];
         }
+        echo $res;
 
 
         $order->update([
