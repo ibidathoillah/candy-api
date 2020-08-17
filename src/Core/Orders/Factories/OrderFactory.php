@@ -407,22 +407,6 @@ class OrderFactory implements OrderFactoryInterface
             $totals->grand_total += $shipping->grand_total;
         }
 
-        $client = new \GuzzleHttp\Client();
-        $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
-                'form_params'=> [
-                    'postal_code' => "51252",
-                    'provider' => 'rpx',
-                    'weight'=> 0
-                ],
-                'headers' => [ 'Authorization' => "Bearer ". auth()->guard('api')->user()->remember_token ]
-        ));
-        
-
-        $res = json_decode($response->getBody()->getContents(), true);
-        if($res["data"]["fee"]){
-            $totals->delivery_total = $res["data"]["fee"];
-        }
-
         $order->update([
             'delivery_total' => $totals->delivery_total ?? 0,
             'tax_total' => $totals->tax_total ?? 0,
