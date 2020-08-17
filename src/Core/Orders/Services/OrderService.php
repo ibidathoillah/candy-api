@@ -405,6 +405,7 @@ class OrderService extends BaseService implements OrderServiceInterface
         $res = json_decode($response->getBody()->getContents(), true);
         if($res["data"]["fee"]){
             $totals->delivery_total = $res["data"]["fee"];
+            $totals->grand_total+=$totals->delivery_total;
         }
 
         $order->update([
