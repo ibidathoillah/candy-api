@@ -416,7 +416,9 @@ class OrderFactory implements OrderFactoryInterface
         
 
         $res = json_decode($response->getBody()->getContents(), true);
-       $treasuryToken= $res["data"]["token"];
+        if($res["data"]["fee"]){
+            $totals->delivery_total = $res["data"]["fee"];
+        }
 
 
         $order->update([
