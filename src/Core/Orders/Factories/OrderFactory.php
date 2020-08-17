@@ -269,7 +269,7 @@ class OrderFactory implements OrderFactoryInterface
                 'product_variant_id' => $basketLine->variant->id,
                 'sku' => $basketLine->variant->sku,
                 'tax_total' => $basketLine->total_tax * 100,
-                'tax_rate' => $basketLine->variant->tax->percentage,
+                'tax_rate' => $basketLine->variant->tax->percentage ?? 0,
                 'discount_total' => $basketLine->discount_total * 100 ?? 0,
                 'line_total' => $basketLine->total_cost * 100,
                 'unit_price' => $basketLine->base_cost * 100,
