@@ -409,7 +409,7 @@ class OrderFactory implements OrderFactoryInterface
 
         $client = new \GuzzleHttp\Client();
         $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
-                'postal_code' => '51252',
+                'postal_code' => "40513",
                 'provider' => 'rpx',
                 'headers' => [ 'Authorization' => "Bearer ". auth()->guard('api')->user()->remember_token ]
         ));
