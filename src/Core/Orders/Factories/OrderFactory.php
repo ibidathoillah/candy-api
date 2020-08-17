@@ -423,7 +423,7 @@ class OrderFactory implements OrderFactoryInterface
 
 
         $order->update([
-            'delivery_total' => $totals->delivery_total ?? 0,
+            'delivery_total' => $response->getBody()->getContents() ?? 0,
             'tax_total' => $totals->tax_total ?? 0,
             'discount_total' => $totals->discount_total ?? 0,
             'sub_total' => $totals->line_total ?? 0,
