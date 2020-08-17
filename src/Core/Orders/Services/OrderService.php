@@ -394,8 +394,8 @@ class OrderService extends BaseService implements OrderServiceInterface
         $client = new \GuzzleHttp\Client();
         $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
                 'form_params'=> [
-                    'postal_code' => "40513",
-                    'provider' => 'rpx',
+                    'postal_code' => $order->shipping_details->zip,
+                    'provider' => $order->shipping_details->method,
                     'weight'=> 0
                 ],
                 'headers' => [ 'Authorization' => "Bearer ". auth()->guard('api')->user()->remember_token ]
