@@ -6,6 +6,7 @@ use DB;
 use PDF;
 use Auth;
 use Carbon\Carbon;
+use Exception;
 use GetCandy\Api\Core\Orders\Models\Order;
 use GetCandy\Api\Core\Scaffold\BaseService;
 use GetCandy\Api\Core\Baskets\Models\Basket;
@@ -390,6 +391,8 @@ class OrderService extends BaseService implements OrderServiceInterface
             $totals->grand_total += $shipping->grand_total;
         }
 
+        try{
+
 
         $client = new \GuzzleHttp\Client();
         $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
@@ -406,6 +409,11 @@ class OrderService extends BaseService implements OrderServiceInterface
         if($res["data"]["fee"]){
             $totals->delivery_total = $res["data"]["fee"];
             $totals->grand_total+=$totals->delivery_total;
+        }
+
+
+        }catch(Exception $e){
+
         }
 
         $order->update([
