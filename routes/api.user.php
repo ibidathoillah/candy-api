@@ -51,6 +51,7 @@ Route::group([
     $router->put('orders/{id}/shipping/cost', 'Orders\OrderController@shippingCost');
     $router->put('orders/{id}/contact', 'Orders\OrderController@addContact');
     $router->put('orders/{id}/billing/address', 'Orders\OrderController@billingAddress');
+    $router->get('orders/{id}/invoice', 'Orders\OrderController@invoice');
 
     
 
