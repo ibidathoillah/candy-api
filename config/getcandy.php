@@ -39,6 +39,10 @@ return [
         'users' => GetCandy\Api\Core\Discounts\Criteria\Users::class,
     ],
 
+    'invoicing' => [
+        'logo' => "http://intense-oasis-34709.herokuapp.com/candy-hub/images/logo/treasury.png",
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Order settings
