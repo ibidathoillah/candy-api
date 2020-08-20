@@ -177,9 +177,7 @@ Route::group([
         $router->get('/orders', 'ReportController@orders');
         $router->get('/metrics/{subject}', 'ReportController@metrics');
     });
-
-    $router->get('orders/{id}/invoice', 'Orders\OrderController@invoice');
-
+    
     /*
      * Resource routes
      */

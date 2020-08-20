@@ -52,6 +52,8 @@ Route::group([
     $router->put('orders/{id}/contact', 'Orders\OrderController@addContact');
     $router->put('orders/{id}/billing/address', 'Orders\OrderController@billingAddress');
 
+    
+
     $router->post('orders/{id}/lines', 'Orders\OrderLineController@store');
     $router->delete('orders/lines/{id}', 'Orders\OrderLineController@destroy');
 

@@ -39,6 +39,11 @@ Route::group([
     $router->get('search/sku', 'Search\SearchController@sku');
 
 
+
+    $router->get('orders/{id}/invoice', 'Orders\OrderController@invoice');
+
+
+
     /*
      * Customers
      */
