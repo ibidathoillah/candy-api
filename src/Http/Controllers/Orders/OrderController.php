@@ -90,7 +90,7 @@ class OrderController extends BaseController
             $d["is_wishlist"] = \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $d["id"]);
         }
 
-        return $data;
+        return [];
     }
 
     public function getTypes(Request $request)
