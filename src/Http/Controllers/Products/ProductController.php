@@ -40,6 +40,7 @@ class ProductController extends BaseController
         foreach($products as $p){
             $p["is_wishlist"]= \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $p['id'])->get();
         }
+        $products[0]["coba"]= "lala";
 
         return new ProductCollection($products, $this->parseIncludedFields($request));
     }
