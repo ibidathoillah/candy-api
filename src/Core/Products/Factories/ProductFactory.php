@@ -54,6 +54,8 @@ class ProductFactory implements ProductInterface
                 $this->product->max_price = $variant->unit_cost;
             }
         }
+        
+        var_dump($this->product);
 
         return $this->product;
     }
