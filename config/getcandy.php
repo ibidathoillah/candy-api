@@ -59,7 +59,7 @@ return [
         'reference_prefix' => null,
         'mailers' => [
             // 'dispatched' => \Your\OrderDispatchedMailer::class,
-            // 'payment-processing' => \Your\ConfirmationMailer::class,
+            // 'payment-processing' => \App\Mail\PaymentProcessing::class,
         ],
         /*
          * These are the table columns that will appear in the hub
