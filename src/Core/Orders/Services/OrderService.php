@@ -391,29 +391,28 @@ class OrderService extends BaseService implements OrderServiceInterface
             $totals->grand_total += $shipping->grand_total;
         }
 
-        try{
-
-
-        $client = new \GuzzleHttp\Client();
-        $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
-                'form_params'=> [
-                    'postal_code' => $order->shipping_details['zip'],
-                    'provider' => $order->shipping_details['method'],
-                    'weight'=> 0
-                ],
-                'headers' => [ 'Authorization' => "Bearer ". auth()->guard('api')->user()->remember_token ]
-        ));
+        if($order->shipping_details['zip'] && $order->shipping_details['method']){
+            try{
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
+                        'form_params'=> [
+                            'postal_code' => $order->shipping_details['zip'],
+                            'provider' => $order->shipping_details['method'],
+                            'weight'=> 0
+                        ],
+                        'headers' => [ 'Authorization' => "Bearer ". auth()->guard('api')->user()->remember_token ]
+                ));
+                
         
-
-        $res = json_decode($response->getBody()->getContents(), true);
-        if($res["data"]["fee"]){
-            $totals->delivery_total = $res["data"]["fee"];
-            $totals->grand_total+=$totals->delivery_total;
-        }
-
-
-        }catch(Exception $e){
-
+                $res = json_decode($response->getBody()->getContents(), true);
+                if($res["data"]["fee"]){
+                    $totals->delivery_total = $res["data"]["fee"];
+                    $totals->grand_total+=$totals->delivery_total;
+                }
+        
+        
+                }catch(Exception $e){
+                }
         }
 
         $order->update([
