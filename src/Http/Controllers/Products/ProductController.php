@@ -36,6 +36,10 @@ class ProductController extends BaseController
             ->ids($request->ids)
             ->limit($request->get('limit', 50))
             ->get();
+        
+        foreach($products as $p){
+            $p["is_wishlist"]= \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $p['id'])->get();
+        }
 
         return new ProductCollection($products, $this->parseIncludedFields($request));
     }

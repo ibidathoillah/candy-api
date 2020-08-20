@@ -84,16 +84,7 @@ class OrderController extends BaseController
 
         $orders = $criteria->get();
 
-        $data = json_decode(json_encode(new OrderCollection($orders)),true);
-
-       
-        for($i=0;$i<sizeof($data);$i++){
-            $data[$i]["lala"]="po";
-            $data[$i]["is_wishlist"]= \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $data[$i]['id'])->get();
-        }
-
-
-        return $data;
+        return new OrderCollection($orders);
     }
 
     public function getTypes(Request $request)
