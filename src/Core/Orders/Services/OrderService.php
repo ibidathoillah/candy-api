@@ -848,7 +848,7 @@ class OrderService extends BaseService implements OrderServiceInterface
             $discount->total = $total;
         }
 
-        $pdf = PDF::loadView(config('getcandy.invoicing.pdf', 'hub::pdf.order-invoice'), $data);
+        $pdf = PDF::loadView('hub::pdf.order-invoice', $data);
 
         return $pdf;
     }
