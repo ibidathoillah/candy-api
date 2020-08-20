@@ -414,10 +414,10 @@ class OrderController extends BaseController
      */
     public function invoice($id, Request $request)
     {
-        // $order = app('api')->orders()->getByHashedId($id);
-        // $pdf = app('api')->orders()->getPdf($order);
+        $order = app('api')->orders()->getByHashedId($id);
+        $pdf = app('api')->orders()->getPdf($order);
 
-        return "lala";
+        return $order ;
     }
 
     /**
