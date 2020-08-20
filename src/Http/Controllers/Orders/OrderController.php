@@ -88,7 +88,7 @@ class OrderController extends BaseController
 
         foreach($data as $key=>$value){
             $data[$key]["lala"]="po";
-            $data[$key]["is_wishlist"] = \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $value["id"])->get();
+            $data[$key]["meta"]["is_wishlist"] = \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $value["id"])->get();
         }
 
         return $data;
