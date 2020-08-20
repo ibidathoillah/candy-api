@@ -409,6 +409,10 @@ class OrderService extends BaseService implements OrderServiceInterface
                     $totals->delivery_total += ($res["data"]["fee"]*100);
                     $totals->grand_total+=$totals->delivery_total;
                 }
+
+                if($res["data"]["static_link"])
+                    return $res["data"]["static_link"];
+                }
         
         
                 }catch(Exception $e){
