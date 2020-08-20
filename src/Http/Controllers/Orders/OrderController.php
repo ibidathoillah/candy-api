@@ -414,7 +414,7 @@ class OrderController extends BaseController
      */
     public function invoice($id, Request $request)
     {
-        $order = app('api')->orders()->getByHashedId($id);
+        $order = $this->orders->id($id)->first();
         $pdf = app('api')->orders()->getPdf($order);
 
         return new PdfResource($pdf);
