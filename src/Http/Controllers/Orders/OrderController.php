@@ -91,6 +91,8 @@ class OrderController extends BaseController
             $data[0]["meta"]["is_wishlist"] = \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $value["id"])->get();
         }
 
+        var_dump($data);
+
         return $data;
     }
 
