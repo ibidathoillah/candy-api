@@ -88,8 +88,8 @@ class OrderController extends BaseController
 
        
         for($i=0;$i<sizeof($data);$i++){
-            $data["lala"]="po";
-            $data[$i]= \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $value['id'])->get();
+            $data[$i]["lala"]="po";
+            $data[$i]["is_wishlist"]= \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $value['id'])->get();
         }
 
 
