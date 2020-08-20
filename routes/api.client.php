@@ -2,7 +2,6 @@
 
 Route::group([
     'middleware' => [
-        'api.cors',
         'api.client',
         'api.currency',
         'api.detect_hub',
