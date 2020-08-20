@@ -86,9 +86,12 @@ class OrderController extends BaseController
 
         $data = json_decode(json_encode(new OrderCollection($orders)),true);
 
-        foreach($data as $value){
-            $value['is_wishlist'] = \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $value['id'])->get();
+       
+        for($i=0;$i<sizeof($data);$i++){
+            $data["lala"]="po";
+            $data[$i]= \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $value['id'])->get();
         }
+
 
         return $data;
     }
