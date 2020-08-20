@@ -825,13 +825,13 @@ class OrderService extends BaseService implements OrderServiceInterface
 
     public function getPdf($order)
     {
-        $settings['address'] = app('api')->settings()->get('address')['content'];
-        $settings['tax'] = app('api')->settings()->get('tax')['content'];
-        $settings['contact'] = app('api')->settings()->get('contact')['content'];
+        // $settings['address'] = app('api')->settings()->get('address')['content'];
+        // $settings['tax'] = app('api')->settings()->get('tax')['content'];
+        // $settings['contact'] = app('api')->settings()->get('contact')['content'];
 
         $data = [
             'order' => $order->load(['lines', 'discounts']),
-            'settings' => $settings,
+            // 'settings' => $settings,
         ];
 
         //TODO: This is bad mmkay, refactor when orders are re engineered
