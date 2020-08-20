@@ -84,11 +84,7 @@ class OrderController extends BaseController
 
         $orders = $criteria->get();
 
-        $object = new OrderCollection($orders);
-        $reflector = new \ReflectionClass($object);
-        $classProperty = $reflector->getProperty('_data');
-        $classProperty->setAccessible(true);
-        $data = $classProperty->getValue($object);
+        $data = json_decode(json_encode(new OrderCollection($orders)));
 
         foreach($data as $key=>$value){
             $data[$key]['is_wishlist'] = \App\ProductWishlist::where("user_id",auth()->guard('api')->user()->id)->where('product_id', $value['id'])->get();
