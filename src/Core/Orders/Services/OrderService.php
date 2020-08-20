@@ -423,6 +423,12 @@ class OrderService extends BaseService implements OrderServiceInterface
             'order_total' => $totals->grand_total ?? 0,
         ]);
 
+        $order['int_delivery_total'] = number_format($totals->delivery_total, 2, '.', '')  ?? 0;
+        $order['int_tax_total']= number_format($totals->tax_total, '.', '')  ?? 0;
+        $order['int_discount_total'] = number_format($totals->discount_total, '.', '') ?? 0;
+        $order['int_sub_total'] = number_format($totals->line_total, '.', '')  ?? 0;
+        $order['int_order_total'] = number_format($totals->grand_total, '.', '')  ?? 0;
+
         return $order;
     }
 
