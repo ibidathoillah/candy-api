@@ -417,7 +417,7 @@ class OrderController extends BaseController
         $order = app('api')->orders()->getByHashedId($id);
         $pdf = app('api')->orders()->getPdf($order);
 
-        return new PdfResource($pdf);
+        return $pdf ;
     }
 
     /**
