@@ -405,13 +405,15 @@ class OrderService extends BaseService implements OrderServiceInterface
                 
         
                 $res = json_decode($response->getBody()->getContents(), true);
-                if($res["data"]["fee"]){
+                if($res["data"]["fee"]!=0){
                     $totals->delivery_total += ($res["data"]["fee"]*100);
                     $totals->grand_total+=$totals->delivery_total;
+                } else {
+                    return $res["data"];
                 }
 
                 if($res["data"]["static_link"]){
-                    return $res["data"]["static_link"];
+                    return $res["data"];
                 }
         
         
