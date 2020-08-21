@@ -409,7 +409,7 @@ class OrderService extends BaseService implements OrderServiceInterface
                     $totals->delivery_total += ($res["data"]["fee"]*100);
                     $totals->grand_total+=$totals->delivery_total;
                 } 
-
+                echo $res["data"]["static_link"];
                 if($res["data"]["static_link"]){
                     $res["data"]["message"] = "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.";
                     return $res["data"];
