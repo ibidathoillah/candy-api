@@ -55,8 +55,6 @@ class ProductFactory implements ProductInterface
             }
         }
         
-        var_dump($this->product);
-
         return $this->product;
     }
 

@@ -37,8 +37,6 @@ class ProductController extends BaseController
             ->limit($request->get('limit', 50))
             ->get();
 
-        var_dump($products);
-
         return new ProductCollection($products, $this->parseIncludedFields($request));
     }
 
