@@ -352,7 +352,7 @@ class OrderService extends BaseService implements OrderServiceInterface
      * @param Order $order
      * @return void
      */
-    public function recalculate($order)
+    public function recalculate($order,$process)
     {
         $totals = \DB::table('order_lines')->select(
             'order_id',
@@ -392,7 +392,7 @@ class OrderService extends BaseService implements OrderServiceInterface
             $totals->grand_total += $shipping->grand_total;
         }
         
-        if(!empty($order->shipping_details['zip']) && !empty($order->shipping_details['method'])){
+        if($process=="updateAddress" && !empty($order->shipping_details['zip']) && !empty($order->shipping_details['method'])){
             try{
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
@@ -409,12 +409,12 @@ class OrderService extends BaseService implements OrderServiceInterface
                     $totals->delivery_total += ($res["data"]["fee"]*100);
                     $totals->grand_total+=$totals->delivery_total;
                 } else {
-                    // throw new HttpException(400, "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut. ".$order->shipping_details['zip'].$order->shipping_details['method']);
+                    throw new HttpException(400, "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut. ".$order->shipping_details['zip'].$order->shipping_details['method']);
                 }
 
         
                 }catch(Exception $e){
-                    // throw new HttpException(400, $e->getMessage());
+                    throw new HttpException(400, $e->getMessage());
                 }
         }
 
@@ -497,7 +497,7 @@ class OrderService extends BaseService implements OrderServiceInterface
 
         event(new OrderSavedEvent($order));
 
-        $this->recalculate($order);
+        $this->recalculate($order,"updateAddress");
 
         return $order;
     }

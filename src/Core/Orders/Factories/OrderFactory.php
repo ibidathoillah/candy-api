@@ -237,7 +237,7 @@ class OrderFactory implements OrderFactoryInterface
 
         event(new OrderSavedEvent($order, $this->basket));
 
-        return $this->recalculate($order);
+        return $this->recalculate($order,"resolve");
     }
 
     /**

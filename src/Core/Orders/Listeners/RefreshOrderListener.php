@@ -19,6 +19,6 @@ class RefreshOrderListener
         if ($order->placed_at) {
             return;
         }
-        app('api')->orders()->recalculate($order);
+        app('api')->orders()->recalculate($order,"handle");
     }
 }
