@@ -195,14 +195,15 @@ class OrderController extends BaseController
                 }
             }
 
-            // $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            // $charactersLength = strlen($characters);
-            // $randomString = '';
-            // for ($i = 0; $i < 10; $i++) {
-            //     $randomString .= $characters[rand(0, $charactersLength - 1)];
-            // }
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < 10; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
 
-            $request->meta["payment_reference"] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            $meta['meta']['payment_reference'] = $randomString;
+            $request->merge($meta);
 
             $order = $factory
                 ->order($order)
