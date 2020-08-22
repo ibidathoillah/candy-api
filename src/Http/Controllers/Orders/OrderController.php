@@ -202,8 +202,9 @@ class OrderController extends BaseController
                 $randomString .= $characters[rand(0, $charactersLength - 1)];
             }
 
-            $meta['meta']['payment_reference'] = $randomString;
-            $request->merge($meta);
+            $request->merge([
+                "meta" => ["payment_reference" => $randomString]
+            ]);
 
             $order = $factory
                 ->order($order)
