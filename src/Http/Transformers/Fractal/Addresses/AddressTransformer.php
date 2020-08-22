@@ -15,6 +15,7 @@ class AddressTransformer extends BaseTransformer
             'lastname' => $address->lastname,
             'email' => $address->email,
             'address' => $address->address,
+            'address_name' => $this->address_name,
             'address_two' => $address->address_two,
             'address_three' => $address->address_three,
             'city' => $address->city,

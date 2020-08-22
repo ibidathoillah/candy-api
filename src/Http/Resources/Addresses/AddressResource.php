@@ -14,6 +14,7 @@ class AddressResource extends AbstractResource
             'lastname' => $this->lastname,
             'email' => $this->email,
             'address' => $this->address,
+            'address_name' => $this->address_name,
             'address_two' => $this->address_two,
             'address_three' => $this->address_three,
             'city' => $this->city,
