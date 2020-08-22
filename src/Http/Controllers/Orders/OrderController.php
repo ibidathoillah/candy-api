@@ -187,7 +187,7 @@ class OrderController extends BaseController
 
             $order = $criteria->id($request->order_id)->first();
 
-            if($order->delivery_total==0 || $order->delivery_total=="0"){
+            if($order->shipping_method!=null && ($order->delivery_total==0 || $order->delivery_total=="0")){
                 throw new HttpException(400, "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.");
             }
 
