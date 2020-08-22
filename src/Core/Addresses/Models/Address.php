@@ -15,6 +15,7 @@ class Address extends BaseModel
      * @var array
      */
     protected $fillable = [
+        'address_name',
         'address',
         'address_three',
         'address_two',
@@ -35,6 +36,7 @@ class Address extends BaseModel
         return $this->only([
             'firstname',
             'lastname',
+            'address_name',
             'address',
             'address_two',
             'address_three',
