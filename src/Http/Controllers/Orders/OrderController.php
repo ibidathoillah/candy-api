@@ -210,6 +210,10 @@ class OrderController extends BaseController
                 return $this->errorForbidden('Payment has failed');
             }
 
+            if($order->delivery_total==0 || $order->delivery_total=="0"){
+                throw new HttpException(400, "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.");
+            }
+
             return new OrderResource($order);
         } catch (IncompleteOrderException $e) {
             return $this->errorForbidden('The order is missing billing information');
