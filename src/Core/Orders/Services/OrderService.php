@@ -392,7 +392,7 @@ class OrderService extends BaseService implements OrderServiceInterface
             $totals->grand_total += $shipping->grand_total;
         }
 
-        if(!empty($order->shipping_details['zip']) && !empty($order->shipping_details['method'])){
+        if( $totals->delivery_total==0 && !empty($order->shipping_details['zip']) && !empty($order->shipping_details['method'])){
             try{
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
