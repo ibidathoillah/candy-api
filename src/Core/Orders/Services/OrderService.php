@@ -392,6 +392,7 @@ class OrderService extends BaseService implements OrderServiceInterface
         }
 
         if($order->shipping_details['zip'] && $order->shipping_details['method']){
+            $res = null;
             try{
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
@@ -402,21 +403,20 @@ class OrderService extends BaseService implements OrderServiceInterface
                         ],
                         'headers' => [ 'Authorization' => "Bearer ". auth()->guard('api')->user()->remember_token ]
                 ));
-                
-        
+                        
                 $res = json_decode($response->getBody()->getContents(), true);
                 if($res["data"]["fee"]!=0){
                     $totals->delivery_total += ($res["data"]["fee"]*100);
                     $totals->grand_total+=$totals->delivery_total;
                 } 
-                echo $res["data"]["static_link"];
-                if($res["data"]["static_link"]){
-                    $res["data"]["message"] = "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.";
-                    return $res["data"];
-                }
         
                 }catch(Exception $e){
                     return $e;
+                }
+
+                if($res["data"]["static_link"]){
+                    $res["data"]["message"] = "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.";
+                    return $res["data"];
                 }
         }
 
