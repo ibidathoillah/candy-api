@@ -31,6 +31,7 @@ use GetCandy\Api\Core\Orders\Exceptions\BasketHasPlacedOrderException;
 use GetCandy\Api\Core\Orders\Exceptions\OrderAlreadyProcessedException;
 use GetCandy\Api\Core\Orders\Interfaces\OrderProcessingFactoryInterface;
 use GetCandy\Api\Core\Payments\Exceptions\ThreeDSecureRequiredException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class OrderController extends BaseController
 {
