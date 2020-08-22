@@ -473,6 +473,7 @@ class OrderService extends BaseService implements OrderServiceInterface
         if (! empty($data['address_id'])) {
             $shipping = app('api')->addresses()->getByHashedId($data['address_id']);
             $payload = $shipping->only([
+                'address_name',
                 'firstname',
                 'lastname',
                 'address',
