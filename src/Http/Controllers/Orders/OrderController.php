@@ -195,15 +195,15 @@ class OrderController extends BaseController
                 }
             }
 
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $charactersLength = strlen($characters);
-            $randomString = '';
-            for ($i = 0; $i < 10; $i++) {
-                $randomString .= $characters[rand(0, $charactersLength - 1)];
-            }
+            // $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            // $charactersLength = strlen($characters);
+            // $randomString = '';
+            // for ($i = 0; $i < 10; $i++) {
+            //     $randomString .= $characters[rand(0, $charactersLength - 1)];
+            // }
 
             $request->merge([
-                "meta" => ["payment_reference" => $randomString]
+                "meta" => ["payment_reference" => "X12312-ZZ-LALA"]
             ]);
 
             $order = $factory
