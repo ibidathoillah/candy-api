@@ -412,9 +412,7 @@ class OrderService extends BaseService implements OrderServiceInterface
 
                 if($totals->delivery_total==0 || $totals->delivery_total=="0"){
 
-                    throw new HttpException(400, [
-                        "message"=> "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.",
-                    ]);
+                    throw new HttpException(400, "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.");
                 }
         
         
