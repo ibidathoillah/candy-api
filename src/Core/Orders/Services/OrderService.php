@@ -408,12 +408,10 @@ class OrderService extends BaseService implements OrderServiceInterface
                 if($res["data"]["fee"]!=0){
                     $totals->delivery_total += ($res["data"]["fee"]*100);
                     $totals->grand_total+=$totals->delivery_total;
-                } 
-
-                if($totals->delivery_total==0 || $totals->delivery_total=="0"){
+                } else {
                     throw new HttpException(400, "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.");
                 }
-        
+
         
                 }catch(Exception $e){
                     throw new HttpException(400, $e->getMessage());
