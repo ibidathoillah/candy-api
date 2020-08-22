@@ -25,6 +25,7 @@ use GetCandy\Api\Core\Orders\Exceptions\BasketHasPlacedOrderException;
 use GetCandy\Api\Core\Currencies\Interfaces\CurrencyConverterInterface;
 use GetCandy\Api\Core\ActivityLog\Interfaces\ActivityLogFactoryInterface;
 use GetCandy\Api\Core\Orders\Interfaces\OrderFactoryInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class OrderService extends BaseService implements OrderServiceInterface
 {
@@ -408,16 +409,20 @@ class OrderService extends BaseService implements OrderServiceInterface
                     $totals->delivery_total += ($res["data"]["fee"]*100);
                     $totals->grand_total+=$totals->delivery_total;
                 } 
+
+                if($totals->delivery_total==0 || $totals->delivery_total=="0"){
+
+                    throw new HttpException(400, [
+                        "message"=> "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.",
+                    ]);
+                }
+        
         
                 }catch(Exception $e){
-                    return $e;
+                    throw new HttpException(400, $e->getMessage());
                 }
         }
-        if($totals->delivery_total==0 || $totals->delivery_total=="0"){
-            return [
-                "message"=> "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut.",
-            ];
-        }
+        
 
         $order->update([
             'delivery_total' => $totals->delivery_total ?? 0,
