@@ -222,7 +222,16 @@ class OrderProcessingFactory implements OrderProcessingFactoryInterface
         $this->order->customer_reference = $this->customerReference;
         $this->order->type = $this->type ?: $driver->getName();
 
-        $this->order->meta = array_merge($this->order->meta ?? [], $this->meta ?? []);
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        
+
+        $this->order->meta = array_merge($this->order->meta ?? [], $this->meta ?? [], ["payment_reference"=> $randomString]);
         $this->order->company_name = $this->companyName;
 
         $this->order->save();
