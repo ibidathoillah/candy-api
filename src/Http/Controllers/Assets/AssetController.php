@@ -32,20 +32,19 @@ class AssetController extends BaseController
             });
             $image->crop(500, 300, 0, 0);
             $thumbnail = "{$directory}/thumbnails/{$filename}.{$type}";
-            Storage::put(
+            Storage::disk("public")->put(
                 $thumbnail,
                 $image->stream($type, 100)->getContents(),
                 "public"
             );
-            $thumbnail_success = $thumbnail;
         } catch (NotReadableException $e) {
         }
 
         return response()->json([
             'path' => $path,
             'url'=> \Storage::disk("public")->url($path),
-            'thumbnail' => $thumbnail_success ?? null,
-            'thumbnail_url' => ! empty($thumbnail_success) ? \Storage::disk("public")->url($thumbnail_success) : null,
+            'thumbnail' => $thumbnail ?? null,
+            'thumbnail_url' => ! empty($thumbnail) ? \Storage::disk("public")->url($thumbnail) : null,
         ]);
     }
 
