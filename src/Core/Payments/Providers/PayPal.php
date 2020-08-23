@@ -83,7 +83,7 @@ class PayPal extends AbstractProvider
         });
 
         if (! $success) {
-            $response = new PaymentResponse(false, 'Unable to process order');
+            $response = new PaymentResponse(false, 'Order tidak dapat diproses');
             $response->transaction = $transactions->first(function ($t) {
                 return ! $t->success;
             });
@@ -91,7 +91,7 @@ class PayPal extends AbstractProvider
             return $response;
         }
 
-        $response = new PaymentResponse(true, 'Payment Received');
+        $response = new PaymentResponse(true, 'Pembayaran Diterima');
         $response->transaction($success);
 
         return $response;

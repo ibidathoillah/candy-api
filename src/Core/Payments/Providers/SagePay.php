@@ -155,7 +155,7 @@ class SagePay extends AbstractProvider
             );
         }
 
-        $response = new PaymentResponse(true, 'Payment Received');
+        $response = new PaymentResponse(true, 'Pembayaran Diterima');
 
         if (! empty($content['paymentMethod']['card']['reusable'])) {
             $this->saveCard($content['paymentMethod']['card']);

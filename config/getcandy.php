@@ -84,20 +84,20 @@ return [
 
             'options' => [
                 'failed' => [
-                    'label' => 'Failed',
+                    'label' => 'Gagal',
                     'color' => '#e4002b',
                     'favourite' => true, // This will show as a tab in the hub
                 ],
                 'payment-received' => [
-                    'label' => 'Payment Received',
+                    'label' => 'Pembayaran Diterima',
                     'color' => '#6a67ce',
                 ],
                 'awaiting-payment' => [
-                    'label' => 'Awaiting Payment',
+                    'label' => 'Menunggu Pembayaran',
                     'color' => '#848a8c',
                 ],
                 'payment-processing' => [
-                    'label' => 'Payment Processing',
+                    'label' => 'Pembayaran Dalam Proses',
                     'color' => '#b84592',
                 ],
             ],

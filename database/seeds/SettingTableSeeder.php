@@ -36,10 +36,10 @@ class SettingTableSeeder extends Seeder
             'handle' => 'orders',
             'content' => [
                 'statuses' => [
-                    'awaiting-payment' => 'Awaiting Payment',
+                    'awaiting-payment' => 'Menunggu Pembayaran',
                     'void' => 'Void',
-                    'payment-received' => 'Payment Received',
-                    'payment-processing' => 'Payment Processing',
+                    'payment-received' => 'Pembayaran Diterima',
+                    'payment-processing' => 'Pembayaran Dalam Proses',
                 ],
                 'default_status' => 'awaiting-payment',
             ],
