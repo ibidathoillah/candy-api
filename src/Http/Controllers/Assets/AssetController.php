@@ -51,7 +51,7 @@ class AssetController extends BaseController
     public function store(UploadRequest $request)
     {
 
-        if($request->parent=="article"){
+        if($request->parent=="articles"){
             $parent = \App\Article::find($request->parent_id);
     
             $data = $request->all();
