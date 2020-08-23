@@ -42,9 +42,9 @@ class AssetController extends BaseController
 
         return response()->json([
             'path' => $path,
-            'url'=> \Storage::url($path),
+            'url'=> \Storage::disk("public")->url($path),
             'thumbnail' => $thumbnail ?? null,
-            'thumbnail_url' => ! empty($thumbnail) ? \Storage::url($thumbnail) : null,
+            'thumbnail_url' => ! empty($thumbnail) ? \Storage::disk("public")->url($thumbnail) : null,
         ]);
     }
 
