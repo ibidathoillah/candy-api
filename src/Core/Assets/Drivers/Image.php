@@ -21,6 +21,10 @@ class Image extends BaseUploadDriver implements AssetDriverContract
     {
         $source = app('api')->assetSources()->getByHandle($model->settings['asset_source']);
 
+    
+        var_dump($model->settings['asset_source']);
+       var_dump($source);
+
         $asset = $this->prepare($data, $source);
 
         try {
@@ -45,7 +49,9 @@ class Image extends BaseUploadDriver implements AssetDriverContract
         if ($data['file'] instanceof SplFileInfo) {
             Storage::disk($source->disk)->put($asset->location.'/'.$asset->filename, $data['file']->getContents());
         } else {
-            $data['file']->storeAs($asset->location,$asset->filename, $source->disk);
+            var_dump($asset->location);
+
+            // $data['file']->storeAs($asset->location,$asset->filename, $source->disk);
         }
 
         if (! empty($image)) {
