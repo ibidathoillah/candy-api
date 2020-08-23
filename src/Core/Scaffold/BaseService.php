@@ -30,8 +30,10 @@ abstract class BaseService
      */
     public function getByHashedId($id)
     {
-        $id = $this->model->decodeId($id);
-
+        if(!is_numeric($id)){
+            $id = $this->model->decodeId($id);
+        }
+        
         return $this->model->withoutGlobalScopes()->findOrFail($id);
     }
 
