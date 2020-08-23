@@ -18,14 +18,13 @@ class AssetController extends BaseController
     public function storeSimple(Request $request)
     {
         $file = $request->file('file');
-
         $directory = 'public/uploads/'.Carbon::now()->format('d/m');
 
-        $path = $file->store($directory);
+        $path = $file->store($directory,"public");
 
         // You can't transform a PDF so...
         try {
-            $image = Image::make(Storage::get($path));
+            $image = Image::make(Storage::disk("public")->get($path));
             $type = pathinfo($path, PATHINFO_EXTENSION);
             $filename = basename($path, ".{$type}");
             $image->resize(500, null, function ($constraint) {
@@ -35,7 +34,8 @@ class AssetController extends BaseController
             $thumbnail = "{$directory}/thumbnails/{$filename}.{$type}";
             Storage::put(
                 $thumbnail,
-                $image->stream($type, 100)->getContents()
+                $image->stream($type, 100)->getContents(),
+                "public"
             );
         } catch (NotReadableException $e) {
         }
