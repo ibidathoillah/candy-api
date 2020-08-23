@@ -79,9 +79,6 @@ class AssetController extends BaseController
             }
     
             return $this->respondWithItem($asset, new AssetTransformer);
-        }
-        
-
     }
 
     public function destroy($id)
