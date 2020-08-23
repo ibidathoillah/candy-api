@@ -37,14 +37,15 @@ class AssetController extends BaseController
                 $image->stream($type, 100)->getContents(),
                 "public"
             );
+            $thumbnail_success = $thumbnail;
         } catch (NotReadableException $e) {
         }
 
         return response()->json([
             'path' => $path,
             'url'=> \Storage::disk("public")->url($path),
-            'thumbnail' => $thumbnail ?? null,
-            'thumbnail_url' => ! empty($thumbnail) ? \Storage::disk("public")->url($thumbnail) : null,
+            'thumbnail' => $thumbnail_success ?? null,
+            'thumbnail_url' => ! empty($thumbnail_success) ? \Storage::disk("public")->url($thumbnail_success) : null,
         ]);
     }
 
