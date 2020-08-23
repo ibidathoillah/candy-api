@@ -50,41 +50,24 @@ class AssetController extends BaseController
 
     public function store(UploadRequest $request)
     {
+        
+        $data = $request->all();
 
         if($request->parent=="articles"){
             $parent = \App\Article::find($request->parent_id);
-    
-            $data = $request->all();
-    
             if (empty($data['alt'])) {
                 $data['alt'] = $parent->title;
             }
-    
-            $asset = app('api')->assets()->upload(
-                $data,
-                $parent,
-                $parent->id + 1
-            );
-    
-            if (! $asset) {
-                return $this->respondWithError('Unable to upload asset');
-            }
-    
-            return $this->respondWithItem($asset, new AssetTransformer);
-        }
-        else {
+        } else {
             try {
                 $parent = app('api')->{$request->parent}()->getByHashedId($request->parent_id);
             } catch (InvalidServiceException $e) {
                 return $this->errorWrongArgs($e->getMessage());
             }
-    
-            $data = $request->all();
-    
             if (empty($data['alt'])) {
                 $data['alt'] = $parent->attribute('name');
             }
-    
+        }
             $asset = app('api')->assets()->upload(
                 $data,
                 $parent,
