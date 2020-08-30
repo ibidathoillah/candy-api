@@ -13,7 +13,6 @@ use GetCandy\Api\Http\Transformers\Fractal\Discounts\DiscountTransformer;
 use GetCandy\Api\Http\Transformers\Fractal\Categories\CategoryTransformer;
 use GetCandy\Api\Http\Transformers\Fractal\Collections\CollectionTransformer;
 use GetCandy\Api\Http\Transformers\Fractal\Customers\CustomerGroupTransformer;
-use App\ProductWishlist;
 
 class ProductTransformer extends BaseTransformer
 {
@@ -47,11 +46,8 @@ class ProductTransformer extends BaseTransformer
      */
     public function transform(Product $product)
     {
-        $userId = auth()->guard('api')->user()->id;
-
         $response = [
             'id' => $product->encodedId(),
-            'is_wishlist' =>  ProductWishlist::where("user_id",$userId)->where("product_id",$product->encodedId())->first(),
             'attribute_data' => $product->attribute_data,
             'option_data' => $this->parseOptionData($product->option_data),
             'max_price' => $product->max_price,

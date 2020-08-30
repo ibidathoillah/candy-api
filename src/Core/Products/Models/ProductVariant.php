@@ -8,6 +8,7 @@ use GetCandy\Api\Core\Scaffold\BaseModel;
 use GetCandy\Api\Core\Assets\Models\Asset;
 use GetCandy\Api\Core\Traits\HasAttributes;
 use GetCandy\Api\Core\Baskets\Models\BasketLine;
+use App\ProductWishlist;
 
 class ProductVariant extends BaseModel
 {
@@ -81,6 +82,8 @@ class ProductVariant extends BaseModel
     {
         $values = [];
         $option_data = $this->product->option_data;
+        $userId = auth()->guard('api')->user()->id;
+        $values["is_wishlist"] = ProductWishlist::where("user_id",$userId)->where("product_id",$this->product->encodedId())->first();
 
         foreach (json_decode($val, true) as $option => $value) {
             if (! empty($data = $option_data[$option])) {
