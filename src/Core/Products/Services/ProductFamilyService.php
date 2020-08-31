@@ -4,6 +4,7 @@ namespace GetCandy\Api\Core\Products\Services;
 
 use GetCandy\Api\Core\Scaffold\BaseService;
 use GetCandy\Api\Core\Products\Models\ProductFamily;
+use GetCandy\Api\Core\Attributes\Models\Attribute;
 
 class ProductFamilyService extends BaseService
 {
@@ -23,6 +24,12 @@ class ProductFamilyService extends BaseService
     {
         $family = $this->model;
         $family->attribute_data = $data;
+
+        $atts = Attribute::where('group_id', '=', 1)->get();
+        foreach ($atts as $att) {
+            $family->attributes()->attach($att);
+        }
+        
         $family->save();
 
         return $family;
