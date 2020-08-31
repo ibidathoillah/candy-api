@@ -5,6 +5,8 @@ namespace GetCandy\Api\Core\Products\Services;
 use GetCandy\Api\Core\Scaffold\BaseService;
 use GetCandy\Api\Core\Products\Models\ProductFamily;
 use GetCandy\Api\Core\Attributes\Models\Attribute;
+use GetCandy\Api\Core\Search\Events\IndexableSavedEvent;
+use GetCandy\Api\Core\Attributes\Events\AttributableSavedEvent;
 
 class ProductFamilyService extends BaseService
 {
@@ -25,11 +27,14 @@ class ProductFamilyService extends BaseService
         $family = $this->model;
         $family->attribute_data = $data;
 
-        $atts = Attribute::where('group_id', '=', 1)->get();
-        foreach ($atts as $att) {
-            $family->attributes()->attach($att);
-        }
-        
+        // $atts = Attribute::where('group_id', '=', 1)->get();
+        // foreach ($atts as $att) {
+        //     $family->attributes()->attach($att);
+        // }
+        event(new AttributableSavedEvent($family));
+
+        event(new IndexableSavedEvent($family));
+
         $family->save();
 
         return $family;
