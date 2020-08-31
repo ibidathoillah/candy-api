@@ -29,8 +29,12 @@ class ProductFamilyService extends BaseService
 
    
         $family->save();
-        
+
         $atts = Attribute::where('group_id', '=', 1)->get();
+        foreach ($atts as $att) {
+            $family->attributes()->attach($att);
+        }
+        $atts = Attribute::where('group_id', '=', 2)->get();
         foreach ($atts as $att) {
             $family->attributes()->attach($att);
         }
