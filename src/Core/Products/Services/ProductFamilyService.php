@@ -27,16 +27,13 @@ class ProductFamilyService extends BaseService
         $family = $this->model;
         $family->attribute_data = $data;
 
-        // $atts = Attribute::where('group_id', '=', 1)->get();
-        // foreach ($atts as $att) {
-        //     $family->attributes()->attach($att);
-        // }
+   
         $family->save();
-
-        event(new AttributableSavedEvent($family));
-
-        event(new IndexableSavedEvent($family));
-
+        
+        $atts = Attribute::where('group_id', '=', 1)->get();
+        foreach ($atts as $att) {
+            $family->attributes()->attach($att);
+        }
         return $family;
     }
 
