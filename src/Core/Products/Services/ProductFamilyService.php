@@ -31,11 +31,11 @@ class ProductFamilyService extends BaseService
         // foreach ($atts as $att) {
         //     $family->attributes()->attach($att);
         // }
+        $family->save();
+
         event(new AttributableSavedEvent($family));
 
         event(new IndexableSavedEvent($family));
-
-        $family->save();
 
         return $family;
     }
