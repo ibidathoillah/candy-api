@@ -90,7 +90,7 @@ class CollectionService extends BaseService
         $productIds = app('api')->products()->getDecodedIds($products);
         foreach($products as $pid){
             $p = app('api')->products()->getByHashedId($pid);
-            $p->setAttributeDataAttribute(array_merge($p->attributes()->get(),[
+            $p->setAttributeDataAttribute(array_merge(json_encode($p->attribute_data),[
                 "occastionId" => [
                     "webstore" => [
                         "en" => $collectionId
