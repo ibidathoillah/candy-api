@@ -86,15 +86,19 @@ class CollectionService extends BaseService
      */
     public function syncProducts($collectionId, $products = [])
     {
+
         $productIds = app('api')->products()->getDecodedIds($products);
-        $p = app('api')->products()->setAttributeDataAttribute([
-            "occastionId" => [
-                "webstore" => [
-                    "en" => $collectionId
+        foreach($products as $pid){
+            $p = app('api')->products()->getByHashedId($pid);
+            $p->setAttributeDataAttribute([
+                "occastionId" => [
+                    "webstore" => [
+                        "en" => $collectionId
+                    ]
                 ]
-            ]
-        ]);
-        $p->save();
+            ]);
+            $p->save();
+        }
 
         $collection = $this->getByHashedId($collectionId);
         $collection->products()->withTimestamps()->sync($productIds);
