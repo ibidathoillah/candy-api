@@ -5,6 +5,7 @@ namespace GetCandy\Api\Core\Collections\Services;
 use GetCandy\Api\Core\Scaffold\BaseService;
 use GetCandy\Api\Core\Collections\Models\Collection;
 use GetCandy\Api\Core\Attributes\Events\AttributableSavedEvent;
+use GetCandy\Api\Core\Products\Events\ProductSavedEvent;
 
 class CollectionService extends BaseService
 {
@@ -98,6 +99,10 @@ class CollectionService extends BaseService
                 ]
             ]));
             $p->save();
+            event(new ProductSavedEvent($p));
+            event(new AttributableSavedEvent($p));
+            event(new IndexableSavedEvent($p));
+
         }
 
         $collection = $this->getByHashedId($collectionId);
