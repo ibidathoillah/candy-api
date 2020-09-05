@@ -196,6 +196,18 @@ class ProductService extends BaseService
 
         event(new ProductCreatedEvent($product));
 
+        $product->setAttributeDataAttribute(array_merge($product->attribute_data,[
+            "familyid" => [
+                "webstore" => [
+                    "en" => $data['family_id'],
+                ]
+            ]
+        ]));
+        $product->save();
+        event(new ProductSavedEvent($product));
+        event(new AttributableSavedEvent($product));
+        event(new IndexableSavedEvent($product));
+
         return $product;
     }
 
