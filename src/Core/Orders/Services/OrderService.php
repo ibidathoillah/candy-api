@@ -745,7 +745,7 @@ class OrderService extends BaseService implements OrderServiceInterface
                 $order->reference = $this->getNextInvoiceReference();
             }
 
-            if($this->order->meta["payment_ref"]){
+            if($this->order->meta["treasury_payment_id"]){
                 $this->order->placed_at = Carbon::now();
             }
 

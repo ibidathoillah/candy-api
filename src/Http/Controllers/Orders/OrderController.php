@@ -195,6 +195,31 @@ class OrderController extends BaseController
                 }
             }
 
+            if($request->meta["treasury_payment_id"]){
+                try{
+                    $client = new \GuzzleHttp\Client();
+                    $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/jewelry/payment',array(
+                            'form_params'=> [
+                                'amount' =>  ($order->order_total)/100,
+                                'payment_code' =>  $request->meta["treasury_payment_cashtag"],
+                                'cashtag'=> $request->meta["treasury_payment_cashtag"],
+                                'phone' => $request->meta["treasury_payment_phone"],
+                                'pin' => $request->meta["treasury_payment_id"],
+                            ],
+                            'headers' => [ 'Authorization' => "Bearer ". auth()->guard('api')->user()->remember_token ]
+                    ));
+                            
+                    $res = json_decode($response->getBody()->getContents(), true);
+                    $request->meta = array_merge($request->meta, [
+                        "payment_data" => $res,
+                    ]);
+            
+                    }catch(Exception $e){
+                        throw new HttpException(400, $e->getMessage());
+                }
+            }
+
+
             $order = $factory
                 ->order($order)
                 ->provider($type)
@@ -207,10 +232,11 @@ class OrderController extends BaseController
                 ->payload($request->data ?: [])
                 ->resolve();
 
-            if (! $order->placed_at && $order->meta["payment_ref"]) {
+            if (! $order->placed_at && $request->meta["treasury_payment_id"]) {
                 return $this->errorForbidden('Payment has failed');
             }
-
+         
+        
             return new OrderResource($order);
         } catch (IncompleteOrderException $e) {
             return $this->errorForbidden('The order is missing billing information');
