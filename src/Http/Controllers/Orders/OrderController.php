@@ -207,7 +207,7 @@ class OrderController extends BaseController
                 ->payload($request->data ?: [])
                 ->resolve();
 
-            if (! $order->placed_at) {
+            if (! $order->placed_at && $order->meta["payment_ref"]) {
                 return $this->errorForbidden('Payment has failed');
             }
 
