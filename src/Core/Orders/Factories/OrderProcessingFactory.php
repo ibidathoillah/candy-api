@@ -271,7 +271,7 @@ class OrderProcessingFactory implements OrderProcessingFactoryInterface
             } else {
                 $this->order->reference = $this->getNextInvoiceReference();
             }
-            if($this->order->meta["treasury_payment_code"]){
+            if($this->order->meta["payment_code"]){
                 $this->order->placed_at = Carbon::now();
             }
          
