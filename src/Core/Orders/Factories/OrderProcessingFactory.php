@@ -271,7 +271,10 @@ class OrderProcessingFactory implements OrderProcessingFactoryInterface
             } else {
                 $this->order->reference = $this->getNextInvoiceReference();
             }
-            $this->order->placed_at = Carbon::now();
+            if($this->order->meta["payment_ref"]){
+                $this->order->placed_at = Carbon::now();
+            }
+         
             $this->order->save();
             OrderNotification::dispatch(
                 $this->order,

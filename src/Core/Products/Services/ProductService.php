@@ -13,6 +13,7 @@ use GetCandy\Api\Core\Products\Events\ProductCreatedEvent;
 use GetCandy\Api\Core\Products\Interfaces\ProductInterface;
 use GetCandy\Api\Core\Products\Models\ProductRecommendation;
 use GetCandy\Api\Core\Attributes\Events\AttributableSavedEvent;
+use GetCandy\Api\Core\Products\Events\ProductSavedEvent;
 
 class ProductService extends BaseService
 {
