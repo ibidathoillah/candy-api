@@ -219,6 +219,10 @@ class OrderController extends BaseController
                 }
             }
 
+            if($request->meta["payment_pin"]){
+                unset($request->meta["payment_pin"]);
+            }
+
 
             $order = $factory
                 ->order($order)
