@@ -195,21 +195,22 @@ class OrderController extends BaseController
                 }
             }
 
-            if($request->meta["treasury_payment_id"]){
+            if($request->meta["treasury_payment_code"]){
                 try{
                     $client = new \GuzzleHttp\Client();
                     $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/jewelry/payment',array(
                             'form_params'=> [
                                 'amount' =>  ($order->order_total)/100,
-                                'payment_code' =>  $request->meta["treasury_payment_cashtag"],
+                                'payment_code' =>  $request->meta["treasury_payment_code"],
                                 'cashtag'=> $request->meta["treasury_payment_cashtag"],
                                 'phone' => $request->meta["treasury_payment_phone"],
-                                'pin' => $request->meta["treasury_payment_id"],
+                                'pin' => $request->meta["treasury_payment_pin"],
                             ],
                             'headers' => [ 'Authorization' => "Bearer ". auth()->guard('api')->user()->remember_token ]
                     ));
                             
                     $res = json_decode($response->getBody()->getContents(), true);
+                    echo $response->getBody()->getContents();
                     $request->meta = array_merge($request->meta, [
                         "payment_data" => $res,
                     ]);
@@ -232,7 +233,7 @@ class OrderController extends BaseController
                 ->payload($request->data ?: [])
                 ->resolve();
 
-            if (! $order->placed_at && $request->meta["treasury_payment_id"]) {
+            if (! $order->placed_at && $request->meta["treasury_payment_code"]) {
                 return $this->errorForbidden('Payment has failed');
             }
          
