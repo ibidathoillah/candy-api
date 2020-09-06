@@ -4,9 +4,9 @@ namespace GetCandy\Api\Core\Payments\Providers;
 
 use GetCandy\Api\Core\Payments\PaymentResponse;
 
-class Offline extends AbstractProvider
+class Online extends AbstractProvider
 {
-    protected $name = 'Offline';
+    protected $name = 'Online';
 
     public function getName()
     {
@@ -27,7 +27,7 @@ class Offline extends AbstractProvider
 
     public function getClientToken()
     {
-        return 'OFFLINE';
+        return 'Online';
     }
 
     public function updateTransaction($transaction)

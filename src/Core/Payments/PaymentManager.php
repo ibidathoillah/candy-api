@@ -4,7 +4,7 @@ namespace GetCandy\Api\Core\Payments;
 
 use Illuminate\Support\Manager;
 use GetCandy\Api\Core\Payments\Providers\PayPal;
-use GetCandy\Api\Core\Payments\Providers\Offline;
+use GetCandy\Api\Core\Payments\Providers\Online;
 use GetCandy\Api\Core\Payments\Providers\SagePay;
 use GetCandy\Api\Core\Payments\Providers\Braintree;
 
@@ -58,14 +58,14 @@ class PaymentManager extends Manager implements PaymentContract
     }
 
     /**
-     * Create the offline driver.
+     * Create the Online driver.
      *
-     * @return Offline
+     * @return Online
      */
-    public function createOfflineDriver()
+    public function createOnlineDriver()
     {
         return $this->buildProvider(
-            Offline::class
+            Online::class
         );
     }
 
