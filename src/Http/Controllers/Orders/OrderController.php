@@ -296,6 +296,26 @@ class OrderController extends BaseController
         return new OrderResource($order);
     }
 
+      /**
+     * Update an order.
+     *
+     * @param string $id
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function payment($id, UpdateRequest $request)
+    {
+        try {
+            $order = app('api')->orders()->update($id, $request->all(), $request->send_emails ?: false, $request->data);
+        } catch (ModelNotFoundException $e) {
+            return $this->errorNotFound();
+        }
+
+        return new OrderResource($order);
+    }
+
+
     /**
      * Get shipping methods for an order.
      *

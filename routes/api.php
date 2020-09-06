@@ -185,12 +185,6 @@ Route::group([
         'except' => ['edit', 'create', 'show'],
     ]);
 
-    /*
-     * Product families
-     */
-    $router->resource('product-families', 'Products\ProductFamilyController', [
-        'except' => ['edit', 'create'],
-    ]);
 
     /*
      * Routes

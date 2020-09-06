@@ -45,6 +45,7 @@ Route::group([
 
     $router->post('orders/process', 'Orders\OrderController@process');
     $router->post('orders/{id}/expire', 'Orders\OrderController@expire');
+    $router->post('orders/{id}/payment', 'Orders\OrderController@payment');
     $router->put('orders/{id}/shipping/address', 'Orders\OrderController@shippingAddress');
     $router->put('orders/{id}/shipping/methods', 'Orders\OrderController@shippingMethod');
     $router->get('orders/{id}/shipping/methods', 'Orders\OrderController@shippingMethods');

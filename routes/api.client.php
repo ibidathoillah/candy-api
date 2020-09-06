@@ -26,6 +26,14 @@ Route::group([
     });
 
     /*
+     * Product families
+     */
+    $router->resource('product-families', 'Products\ProductFamilyController', [
+        'except' => ['edit', 'create'],
+    ]);
+
+
+    /*
      * Currencies
      */
     $router->resource('currencies', 'Currencies\CurrencyController', [
