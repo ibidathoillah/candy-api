@@ -259,7 +259,8 @@ class OrderProcessingFactory implements OrderProcessingFactoryInterface
     {
         if ($response->success) {
             if ($this->provider) {
-                $this->order->status = $this->provider->success_status;
+                // $this->order->status = $this->provider->success_status;
+                $this->order->status = config('getcandy.orders.statuses.pending', 'payment-processing');
             } else {
                 $this->order->status = config('getcandy.orders.statuses.pending', 'payment-processing');
             }
