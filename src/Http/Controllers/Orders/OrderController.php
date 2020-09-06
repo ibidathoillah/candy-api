@@ -212,7 +212,7 @@ class OrderController extends BaseController
                     $res = json_decode($response->getBody()->getContents(), true);
                     echo $response->getBody()->getContents();
                     $request->meta = array_merge($request->meta, [
-                        "payment_data" => $res,
+                        "treasury_payment_data" => $res,
                     ]);
             
                     }catch(Exception $e){
