@@ -86,11 +86,11 @@ class ProductVariant extends BaseModel
         $userId = auth()->guard('api')->user()->id;
         $values["is_wishlist"] = false;
         try{
-            if(ProductWishlist::where("user_id",$userId)->where("product_id",$this->product->encodedId())->first()){
+            if($this->product && ProductWishlist::where("user_id",$userId)->where("product_id",$this->product->encodedId())->first()){
                 $values["is_wishlist"] = true;
             }
         }catch(Exception $e){
-            
+
         }
     
         foreach (json_decode($val, true) as $option => $value) {
