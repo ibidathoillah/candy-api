@@ -53,6 +53,8 @@ Route::group([
     $router->put('orders/{id}/contact', 'Orders\OrderController@addContact');
     $router->put('orders/{id}/billing/address', 'Orders\OrderController@billingAddress');
     $router->get('orders/{id}/invoice', 'Orders\OrderController@invoice');
+    $router->get('orders/{id}/invoicepdf', 'Orders\OrderController@invoicepdf');
+    
 
     
 

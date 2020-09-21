@@ -470,7 +470,21 @@ class OrderController extends BaseController
 
         return new PdfResource($pdf);
     }
+    /**
+     * Get the invoice PDF.
+     *
+     * @param string $id
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function invoicepdf($id, Request $request)
+    {
+        $order = app('api')->orders()->getByHashedId($id);
+        $pdf = app('api')->orders()->getPdf($order);
 
+        return $pdf;
+    }
     /**
      * Handle the request to return an email preview.
      *
