@@ -7,6 +7,8 @@ use PDF;
 use Auth;
 use Carbon\Carbon;
 use Exception;
+use Mail;
+use App\Mail\TestEmail;
 use GetCandy\Api\Core\Orders\Models\Order;
 use GetCandy\Api\Core\Scaffold\BaseService;
 use GetCandy\Api\Core\Baskets\Models\Basket;
@@ -854,6 +856,39 @@ class OrderService extends BaseService implements OrderServiceInterface
 
         return $pdf;
     }
+
+    public function sendEmail($order)
+    {
+        // $settings['address'] = app('api')->settings()->get('address')['content'];
+        // $settings['tax'] = app('api')->settings()->get('tax')['content'];
+        // $settings['contact'] = app('api')->settings()->get('contact')['content'];
+
+        $data = [
+            'order' => $order->load(['lines', 'discounts']),
+            // 'settings' => $settings,
+            'template'=> config('getcandy.invoicing.pdf', 'hub::pdf.order-invoice'),
+            'subject' => "Notifikasi Transaksi"
+        ];
+
+        //TODO: This is bad mmkay, refactor when orders are re engineered
+
+        foreach ($data['order']['discounts'] as $index => $discount) {
+            $total = 0;
+            foreach ($order->lines as $line) {
+                if ($discount->type == 'percentage') {
+                    $total += $line->total * ($discount->amount / 100);
+                } elseif ($discount->type == 'fixed-price') {
+                    $total += $line->total - $discount->amount;
+                }
+            }
+            $discount->total = $total;
+        }
+        
+        Mail::to(auth()->guard('api')->user()->email)->send(new TestEmail($data));
+
+        return $data;
+    }
+    
 
     /**
      * Process discount lines for an order.

@@ -478,12 +478,12 @@ class OrderController extends BaseController
      *
      * @return mixed
      */
-    public function invoicepdf($id, Request $request)
+    public function sendEmail($id, Request $request)
     {
         $order = app('api')->orders()->getByHashedId($id);
-        $pdf = app('api')->orders()->getPdf($order);
+        $email = app('api')->orders()->sendEmail($order);
 
-        return $pdf;
+        return $email;
     }
     /**
      * Handle the request to return an email preview.
