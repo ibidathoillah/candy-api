@@ -867,7 +867,7 @@ class OrderService extends BaseService implements OrderServiceInterface
             'order' => $order->load(['lines', 'discounts']),
             // 'settings' => $settings,
             'template'=> config('getcandy.invoicing.pdf', 'hub::pdf.order-invoice'),
-            'subject' => "Notifikasi Transaksi"
+            'subject' => "Order Invoice ".$order->invoice_reference." - Notifikasi Transaksi Treasury"
         ];
 
         //TODO: This is bad mmkay, refactor when orders are re engineered
