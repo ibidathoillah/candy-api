@@ -496,11 +496,12 @@ class OrderService extends BaseService implements OrderServiceInterface
 
         $this->setFields($order, $data, $type);
 
+        $this->recalculate($order,"updateAddress");
+
+
         $order->save();
 
         event(new OrderSavedEvent($order));
-
-        $this->recalculate($order,"updateAddress");
 
         return $order;
     }
