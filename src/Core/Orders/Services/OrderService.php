@@ -836,6 +836,7 @@ class OrderService extends BaseService implements OrderServiceInterface
 
         $data = [
             'order' => $order->load(['lines', 'discounts']),
+            'all' => $order,
             // 'settings' => $settings,
         ];
 
