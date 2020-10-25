@@ -835,8 +835,7 @@ class OrderService extends BaseService implements OrderServiceInterface
         // $settings['contact'] = app('api')->settings()->get('contact')['content'];
 
         $data = [
-            'order' => $order->load(['lines', 'discounts']),
-            'all' => $order,
+            'order' => $order->load(['lines', 'discounts','meta']),
             // 'settings' => $settings,
         ];
 
