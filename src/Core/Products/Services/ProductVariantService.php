@@ -249,15 +249,17 @@ class ProductVariantService extends BaseService
      */
     protected function mapOptions($options, $newOptions)
     {
+        echo $options;
+        echo $newOptions;
         foreach ($newOptions as $handle => $option) {
-            foreach ($option as $lang => $value) {
-                $optionKey = str_slug($value);
-                // If this is the first time this option is being set...
-                if (empty($options[$handle])) {
-                    $options[$handle]['label'][$lang] = title_case($value);
-                }
-                $options[$handle]['options'][$optionKey]['values'][$lang] = $value;
-            }
+            // foreach ($option as $lang => $value) {
+            //     $optionKey = str_slug($value);
+            //     // If this is the first time this option is being set...
+            //     if (empty($options[$handle])) {
+            //         $options[$handle]['label'][$lang] = title_case($value);
+            //     }
+            //     $options[$handle]['options'][$optionKey]['values'][$lang] = $value;
+            // }
         }
 
         return $options;
