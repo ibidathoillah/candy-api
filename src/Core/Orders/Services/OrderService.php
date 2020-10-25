@@ -834,8 +834,6 @@ class OrderService extends BaseService implements OrderServiceInterface
         // $settings['tax'] = app('api')->settings()->get('tax')['content'];
         // $settings['contact'] = app('api')->settings()->get('contact')['content'];
 
-        $meta = $order->meta;
-
         $data = [
             'order' => $order->load(['lines', 'discounts']),
             // 'settings' => $settings,
@@ -854,8 +852,6 @@ class OrderService extends BaseService implements OrderServiceInterface
             }
             $discount->total = $total;
         }
-
-        $data['order']['meta'] = $meta;
 
         $pdf = PDF::loadView(config('getcandy.invoicing.pdf', 'hub::pdf.order-invoice'), $data);
 
