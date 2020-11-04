@@ -41,7 +41,8 @@ class Order extends BaseModel
 
     public function getDisplayIdAttribute()
     {
-        return '#ORD-'.str_pad($this->id, 4, 0, STR_PAD_LEFT);
+        $dates = date("Ymd", strtotime($this->placed_at));
+        return '#TRS-'.$dates.'-OWJE-'.str_pad($this->id, 4, 0, STR_PAD_LEFT);
     }
 
     /**
