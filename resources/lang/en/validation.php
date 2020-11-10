@@ -2,8 +2,8 @@
 
 return [
     'hashid_is_valid' => 'The variant ID is incorrect',
-    'in_stock' => 'Insufficient stock levels',
-    'max_qty' => 'Unable to add product at this quantity',
-    'min_qty' => 'You must add at least :min_qty items.',
-    'min_batch' => 'You must add this item in multiples of :min_batch',
+    'in_stock' => 'Melebihi stock yang tesedia',
+    'max_qty' => 'Anda melebihi maksimal pembelian :max_qty',
+    'min_qty' => 'Kamu paling tidak bisa membeli minimal :min_qty items',
+    'min_batch' => 'Kamu paling tidak bisa membeli kelipatan dari :min_batch',
 ];
