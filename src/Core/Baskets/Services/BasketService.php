@@ -314,8 +314,8 @@ class BasketService extends BaseService
                 ->init($service->getByHashedId($item['id']))
                 ->get($item['quantity']);
             
-            if($item['quantity']>$variant->max_qty){
-                throw new \Illuminate\Database\QueryException;
+            if(($collectedVariants[$variant->id]['quantity']+$item['quantity'])>$variant->max_qty){
+                throw new \Illuminate\Database\QueryException
             }
 
             if (array_key_exists($variant->id, $collectedVariants)) {
