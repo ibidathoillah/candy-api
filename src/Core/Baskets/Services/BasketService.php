@@ -313,6 +313,10 @@ class BasketService extends BaseService
             $variant = $this->variantFactory
                 ->init($service->getByHashedId($item['id']))
                 ->get($item['quantity']);
+            
+            if($item['quantity']>$variant->max_qty){
+                throw new \Illuminate\Database\QueryException;
+            }
 
             if (array_key_exists($variant->id, $collectedVariants)) {
                 $collectedVariants[$variant->id]['quantity'] += $item['quantity'];

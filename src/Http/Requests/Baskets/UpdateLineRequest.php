@@ -33,9 +33,6 @@ class UpdateLineRequest extends FormRequest
             $rules["quantity"] = 'required|numeric|min:1|min_quantity:'.$variant->min_qty.'|max:'.$max.'|min_batch:'.$variant->min_batch;
         }
 
-        // $rules["id"] = 'required|hashid_is_valid:product_variants';
-        
-
         return $rules;
     }
 
