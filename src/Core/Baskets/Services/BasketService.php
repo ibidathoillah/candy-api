@@ -338,7 +338,7 @@ class BasketService extends BaseService
             }
 
             if($line->variant->max_qty>0 && $line->quantity > $line->variant->max_qty){
-                abort(422, trans('getcandy::validation.max_qty',["max_qty"=> $line->variant->max_qty]));
+                abort(422, trans('getcandy::validation.max_qty',["max"=> $line->variant->max_qty]));
             }else{
                 $line->save();
             }
