@@ -25,10 +25,6 @@ class UpdateLineRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'basket_id' => 'sometimes|hashid_is_valid:baskets',
-            'variants' => 'array|unique_lines',
-        ];
         $line = app('api')->basketLines()->getByHashedId($this->id);
         $variant = $line->variant;
       
@@ -36,7 +32,7 @@ class UpdateLineRequest extends FormRequest
             $max = $variant->max_qty>0 ? $variant->max_qty : 999999 ;
             $rules["quantity"] = 'required|numeric|min:1|min_quantity:'.$variant->min_qty.'|max:'.$max.'|min_batch:'.$variant->min_batch;
         }
-        
+
         $rules["id"] = 'required|hashid_is_valid:product_variants';
         
 
