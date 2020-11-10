@@ -328,7 +328,6 @@ class BasketService extends BaseService
             ];
         });
 
-        $insuffient = false;
         // If a basket line with this variant already exists, increase that instead
         $basket->lines->map(function ($line) use (&$collectedVariants) {
             $variant_id = $line->product_variant_id;
@@ -339,15 +338,12 @@ class BasketService extends BaseService
             }
 
             if($line->variant->max_qty>0 && $line->quantity > $line->variant->max_qty){
-                $insuffient=true;
+                abort(422, trans('getcandy::validation.max_qty',["max_qty"=> $line->variant->max_qty]));
             }else{
                 $line->save();
             }
         });
 
-        if($insuffient){
-            throw new \Illuminate\Database\QueryException;
-        }
 
         $basket->lines()->createMany($collectedVariants);
     }
