@@ -59,7 +59,11 @@ class BasketLineController extends BaseController
      */
     public function update(string $id, UpdateLineRequest $request)
     {
-        $basket = $this->basketLines->setQuantity($id, $request->quantity);
+        try {
+            $basket = $this->basketLines->setQuantity($id, $request->quantity);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return $this->errorUnprocessable(trans('getcandy::validation.max_qty'));
+        }
 
         return new BasketResource($basket);
     }

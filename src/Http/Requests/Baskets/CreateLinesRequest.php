@@ -37,7 +37,8 @@ class CreateLinesRequest extends FormRequest
                 return $variant->encodedId() === $v['id'] ?? null;
             });
             if ($variant) {
-                $rules["variants.{$i}.quantity"] = 'required|numeric|min:1|min_quantity:'.$variant->min_qty.'|max:'.$variant->max_qty.'|min_batch:'.$variant->min_batch.'|in_stock:'.$v['id'] ?? '0';
+                $max = $variant->max_qty>0 ? $variant->max_qty : 999999 ;
+                $rules["variants.{$i}.quantity"] = 'required|numeric|min:1|min_quantity:'.$variant->min_qty.'|max:'.$max.'|min_batch:'.$variant->min_batch.'|in_stock:'.$v['id'] ?? '0';
             }
             $rules["variants.{$i}.id"] = 'required|hashid_is_valid:product_variants';
         }
