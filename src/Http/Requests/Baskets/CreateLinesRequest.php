@@ -51,7 +51,7 @@ class CreateLinesRequest extends FormRequest
         return [
             'variants.*.id.hashid_is_valid' => trans('getcandy::validation.hashid_is_valid'),
             'variants.*.quantity.min_quantity' => trans('getcandy::validation.min_qty'),
-            'variants.*.quantity.max_quantity' => trans('getcandy::validation.max_qty'),
+            'variants.*.quantity.max' => trans('getcandy::validation.max_qty'),
             'variants.*.quantity.min_batch' => trans('getcandy::validation.min_batch'),
         ];
     }
