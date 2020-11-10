@@ -428,6 +428,9 @@ class OrderService extends BaseService implements OrderServiceInterface
             'order_total' => $totals->grand_total ?? 0,
         ]);
 
+        
+        $order->save();
+
         return $order;
     }
 
