@@ -29,24 +29,16 @@ class UpdateLineRequest extends FormRequest
             'basket_id' => 'sometimes|hashid_is_valid:baskets',
             'variants' => 'array|unique_lines',
         ];
-        $basket = app('api')->basketLines()->getByHashedId($this->id);
+        $line = app('api')->basketLines()->getByHashedId($this->id);
+        $variant = $line->variant;
       
-        $line = [["id"=>$basket->variant->encodedId(),"quantity"=>$this->quantity]]
-
-        $variants = app('api')->productVariants()->getByHashedIds(
-            collect($line)->pluck('id')->toArray()
-        );
-
-        foreach ($line ?? [] as $i => $v) {
-            $variant = $variants->first(function ($variant) use ($v) {
-                return $variant->encodedId() === $v['id'] ?? null;
-            });
-            if ($variant) {
-                $max = $variant->max_qty>0 ? $variant->max_qty : 999999 ;
-                $rules["variants.{$i}.quantity"] = 'required|numeric|min:1|min_quantity:'.$variant->min_qty.'|max:'.$max.'|min_batch:'.$variant->min_batch.'|in_stock:'.$v['id'] ?? '0';
-            }
-            $rules["variants.{$i}.id"] = 'required|hashid_is_valid:product_variants';
+        if ($variant) {
+            $max = $variant->max_qty>0 ? $variant->max_qty : 999999 ;
+            $rules["quantity"] = 'required|numeric|min:1|min_quantity:'.$variant->min_qty.'|max:'.$max.'|min_batch:'.$variant->min_batch;
         }
+        
+        $rules["id"] = 'required|hashid_is_valid:product_variants';
+        
 
         return $rules;
     }
@@ -54,10 +46,10 @@ class UpdateLineRequest extends FormRequest
     public function messages()
     {
         return [
-            'variants.*.id.hashid_is_valid' => trans('getcandy::validation.hashid_is_valid'),
-            'variants.*.quantity.min_quantity' => trans('getcandy::validation.min_qty'),
-            'variants.*.quantity.max' => trans('getcandy::validation.max_qty'),
-            'variants.*.quantity.min_batch' => trans('getcandy::validation.min_batch'),
+            'id.hashid_is_valid' => trans('getcandy::validation.hashid_is_valid'),
+            'quantity.min_quantity' => trans('getcandy::validation.min_qty'),
+            'quantity.max' => trans('getcandy::validation.max_qty'),
+            'quantity.min_batch' => trans('getcandy::validation.min_batch'),
         ];
     }
 }
