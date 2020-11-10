@@ -334,13 +334,14 @@ class BasketService extends BaseService
 
             if (array_key_exists($variant_id, $collectedVariants)) {
                 $line->quantity += $collectedVariants[$variant_id]['quantity'];
-                if($line->quantity > $variant->max_qty){
-                    throw new \Illuminate\Database\QueryException;
-                }
                 unset($collectedVariants[$variant_id]);
             }
 
-            $line->save();
+            if($line->quantity > $line->variant->max_qty){
+                throw new \Illuminate\Database\QueryException;
+            }else{
+                $line->save();
+            }
         });
 
         $basket->lines()->createMany($collectedVariants);
