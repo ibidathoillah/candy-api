@@ -33,7 +33,7 @@ class UpdateLineRequest extends FormRequest
             $rules["quantity"] = 'required|numeric|min:1|min_quantity:'.$variant->min_qty.'|max:'.$max.'|min_batch:'.$variant->min_batch;
         }
 
-        $rules["id"] = 'required|hashid_is_valid:product_variants';
+        // $rules["id"] = 'required|hashid_is_valid:product_variants';
         
 
         return $rules;
@@ -42,7 +42,7 @@ class UpdateLineRequest extends FormRequest
     public function messages()
     {
         return [
-            'id.hashid_is_valid' => trans('getcandy::validation.hashid_is_valid'),
+            // 'id.hashid_is_valid' => trans('getcandy::validation.hashid_is_valid'),
             'quantity.min_quantity' => trans('getcandy::validation.min_qty'),
             'quantity.max' => trans('getcandy::validation.max_qty'),
             'quantity.min_batch' => trans('getcandy::validation.min_batch'),
