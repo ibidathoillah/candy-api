@@ -338,7 +338,7 @@ class BasketService extends BaseService
             }
 
             if($line->quantity > $line->variant->max_qty){
-                throw new \Illuminate\Database\QueryException;
+                // throw new \Illuminate\Database\QueryException;
             }else{
                 $line->save();
             }
