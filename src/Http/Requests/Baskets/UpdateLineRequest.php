@@ -30,8 +30,6 @@ class UpdateLineRequest extends FormRequest
             'variants' => 'array|unique_lines',
         ];
 
-        $req_variants = [["id"=> $this->id,"quantity"=>$this->quantity]];
-
         $variant = app('api')->productVariants()->getByHashedId($this->id);
         $i = 0;
 
