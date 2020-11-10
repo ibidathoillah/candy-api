@@ -30,11 +30,13 @@ class UpdateLineRequest extends FormRequest
             'variants' => 'array|unique_lines',
         ];
 
+        $req_variants = [$this];
+
         $variants = app('api')->productVariants()->getByHashedIds(
-            collect($this->variants)->pluck('id')->toArray()
+            collect($req_variants)->pluck('id')->toArray()
         );
 
-        foreach ($this->variants ?? [] as $i => $v) {
+        foreach ($req_variants ?? [] as $i => $v) {
             $variant = $variants->first(function ($variant) use ($v) {
                 return $variant->encodedId() === $v['id'] ?? null;
             });
