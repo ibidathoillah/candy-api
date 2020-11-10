@@ -59,7 +59,6 @@ class BasketLineController extends BaseController
      */
     public function update(string $id, UpdateLineRequest $request)
     {
-        echo $this->basketLines->variant->id;
 
         try {
             $basket = $this->basketLines->setQuantity($id, $request->quantity);

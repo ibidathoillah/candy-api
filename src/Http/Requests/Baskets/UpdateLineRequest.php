@@ -30,11 +30,13 @@ class UpdateLineRequest extends FormRequest
             'variants' => 'array|unique_lines',
         ];
 
-        $variants = app('api')->productVariants()->getByHashedIds(
-            collect($this->variants)->pluck('id')->toArray()
-        );
+        $basket = app('api')->basketLines()->getByHashedId($this->id);
 
-        foreach ($this->variants ?? [] as $i => $v) {
+        $var = [["id"=> $basket->variant->id,"quantity"=>$this->quantity]]
+
+        $variants = app('api')->productVariants()->getByHashedId();
+
+        foreach ($var ?? [] as $i => $v) {
             $variant = $variants->first(function ($variant) use ($v) {
                 return $variant->encodedId() === $v['id'] ?? null;
             });
