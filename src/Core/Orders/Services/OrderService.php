@@ -394,7 +394,7 @@ class OrderService extends BaseService implements OrderServiceInterface
             $totals->grand_total += $shipping->grand_total;
         }
         
-        if($process=="updateAddress" && !empty($order->shipping_details['zip']) && !empty($order->shipping_details['method'])){
+        if(!empty($order->shipping_details['zip']) && !empty($order->shipping_details['method'])){
             try{
                 $client = new \GuzzleHttp\Client();
                 $response = $client->post(env('TREASURY_API_URL', 'localhost') . '/antigrvty/shipping/rates',array(
@@ -412,7 +412,6 @@ class OrderService extends BaseService implements OrderServiceInterface
                     $totals->delivery_total += ((int)$res["data"]["fee"])*100;
                     $totals->grand_total+=$totals->delivery_total;
 
-                    echo  $totals->delivery_total;
                 } else {
                     throw new HttpException(400, "Area pengiriman yang dituju tidak tersedia, silakan menghubungi support@treasury.id untuk informasi lebih lanjut. ".$order->shipping_details['zip'].$order->shipping_details['method']);
                 }
