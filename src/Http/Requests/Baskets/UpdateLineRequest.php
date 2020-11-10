@@ -17,6 +17,7 @@ class UpdateLineRequest extends FormRequest
         return true;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,8 +25,35 @@ class UpdateLineRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [
+            'basket_id' => 'sometimes|hashid_is_valid:baskets',
+            'variants' => 'array|unique_lines',
+        ];
+
+        $variants = app('api')->productVariants()->getByHashedIds(
+            collect($this->variants)->pluck('id')->toArray()
+        );
+
+        foreach ($this->variants ?? [] as $i => $v) {
+            $variant = $variants->first(function ($variant) use ($v) {
+                return $variant->encodedId() === $v['id'] ?? null;
+            });
+            if ($variant) {
+                $rules["variants.{$i}.quantity"] = 'required|numeric|min:1|min_quantity:'.$variant->min_qty.'|max:'.$variant->max_qty.'|min_batch:'.$variant->min_batch.'|in_stock:'.$v['id'] ?? '0';
+            }
+            $rules["variants.{$i}.id"] = 'required|hashid_is_valid:product_variants';
+        }
+
+        return $rules;
+    }
+
+    public function messages()
+    {
         return [
-            'quantity' => 'required|numeric|min:1',
+            'variants.*.id.hashid_is_valid' => trans('getcandy::validation.hashid_is_valid'),
+            'variants.*.quantity.min_quantity' => trans('getcandy::validation.min_qty'),
+            'variants.*.quantity.max_quantity' => trans('getcandy::validation.max_qty'),
+            'variants.*.quantity.min_batch' => trans('getcandy::validation.min_batch'),
         ];
     }
 }
